@@ -3,7 +3,8 @@ import debounce from "lodash/debounce";
 import { parseLinkHeader } from "./utils";
 import Skeleton from "react-loading-skeleton";
 import client from "./api/client";
-import Container, {
+import {
+  Container,
   Title,
   Desc,
   Input,

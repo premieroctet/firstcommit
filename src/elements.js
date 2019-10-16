@@ -1,21 +1,21 @@
 import styled from "styled-components";
 
-const Container = styled.div`
+export const Container = styled.div`
   text-align: center;
 `;
 
-const Title = styled.p`
+export const Title = styled.p`
   font-size: 25px;
   font-weight: bold;
   color: #1050ff;
 `;
 
-const Desc = styled.p`
+export const Desc = styled.p`
   font-size: 18px;
   color: #1050ff;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   border: 3px solid #1050ff;
   color: #1050ff;
   width: 350px;
@@ -26,7 +26,7 @@ const Input = styled.input`
   margin: 20px 0 20px 0;
 `;
 
-const Suggestion = styled.div`
+export const Suggestion = styled.div`
   border: 1px solid #1050ff;
   margin: 0 auto;
   border-radius: 5px;
@@ -41,14 +41,14 @@ const Suggestion = styled.div`
   }
 `;
 
-const CommitContainer = styled.div`
+export const CommitContainer = styled.div`
   margin: 0 auto;
   margin-top: 20px;
   padding: 10px;
   width: 480px;
 `;
 
-const CommitButton = styled.button`
+export const CommitButton = styled.button`
   color: #1050ff;
   background-color: white;
   border: 1px solid #1050ff;
@@ -65,4 +65,3 @@ const CommitButton = styled.button`
 `;
 
 export default Container;
-export { Title, Desc, Input, Suggestion, CommitContainer, CommitButton };
