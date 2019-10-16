@@ -2,32 +2,64 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.title {
+  font-size: 25px;
+  font-weight: bold;
+  color: #1050ff;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.desc {
+  font-size: 18px;
+  color: #1050ff;
+}
+
+input {
+  border: 3px solid #1050ff;
+  color: #1050ff;
+  width: 350px;
+  height: 30px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 18px;
+  margin: 20px 0 20px 0;
+}
+
+.suggestion {
+  border: 1px solid #1050ff;
+  margin: 0 auto;
+  border-radius: 5px;
+  width: 500px;
+  height: 30px;
+  margin-top: 10px;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background-color: #1050ff;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.commit-container {
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 10px;
+  width: 480px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.commit-button {
+  color: #1050ff;
+  background-color: white;
+  border: 1px solid #1050ff;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.commit-button:hover {
+  color: white;
+  background-color: #1050ff;
 }
