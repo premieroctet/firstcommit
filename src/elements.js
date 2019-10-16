@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   text-align: center;
+  width: 600px;
+  margin: 0 auto;
 `;
 
 export const Title = styled.p`
@@ -28,11 +30,12 @@ export const Input = styled.input`
 
 export const Suggestion = styled.div`
   border: 1px solid #1050ff;
-  margin: 0 auto;
   border-radius: 5px;
   width: 500px;
   height: 30px;
-  margin-top: 10px;
+  margin: 0 auto;
+  overflow: hidden;
+  margin-bottom: 10px;
   padding-top: 10px;
   cursor: pointer;
   &:hover {
@@ -62,6 +65,11 @@ export const CommitButton = styled.button`
     color: white;
     background-color: #1050ff;
   }
+`;
+
+export const SkeletonContainer = styled.div`
+  width: 300px;
+  margin: 0 auto;
 `;
 
 export default Container;

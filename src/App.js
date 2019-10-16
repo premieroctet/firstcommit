@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import debounce from "lodash/debounce";
 import { parseLinkHeader } from "./utils";
 import Skeleton from "react-loading-skeleton";
@@ -10,16 +10,18 @@ import {
   Input,
   Suggestion,
   CommitContainer,
-  CommitButton
+  CommitButton,
+  SkeletonContainer
 } from "./elements";
 
 function App() {
   const [repositories, setRepositories] = useState([]);
   const [firstCommit, setFirstCommit] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loadingCommit, setLoadingCommit] = useState(false);
+  const [loadingRepo, setLoadingRepo] = useState(false);
 
   const getFirstCommit = async repository => {
-    setLoading(true);
+    setLoadingCommit(true);
     let response = await client.get(`/repos/${repository}/commits`);
 
     if (response.headers.link) {
@@ -30,16 +32,38 @@ function App() {
     const lastCommit = response.data[response.data.length - 1];
 
     setFirstCommit(lastCommit.html_url);
-    setLoading(false);
+    setLoadingCommit(false);
   };
 
   const searchRepositories = debounce(async term => {
-    let response = await client.get(
-      `/search/repositories?q=${term}&per_page=5`
-    );
-    const repositories = response.data.items;
-    setRepositories(repositories.map(repository => repository.full_name));
+    if (url === "") {
+      setLoadingRepo(false);
+      const repositories = [];
+      setRepositories(repositories.map(repository => repository.full_name));
+    } else {
+      setLoadingRepo(true);
+      let response = await client.get(
+        `/search/repositories?q=${term}&per_page=5`
+      );
+      const repositories = response.data.items;
+      setLoadingRepo(false);
+      setRepositories(repositories.map(repository => repository.full_name));
+    }
   }, 500);
+
+  const queryParams = new URLSearchParams(window.location.search);
+  const [url, setUrl] = useState(queryParams.get("repo") || null);
+
+  useEffect(() => {
+    if (url) {
+      searchRepositories(url);
+    }
+    //eslint-disable-next-line
+  }, [url]);
+
+  const onChange = event => {
+    setUrl(event.target.value);
+  };
 
   return (
     <Container>
@@ -54,21 +78,35 @@ function App() {
       <form>
         <Input
           placeholder="Name of Github repository"
-          onChange={e => searchRepositories(e.target.value)}
+          onChange={onChange}
           type="text"
+          value={url}
+          ref={input => input && input.focus()}
         />
       </form>
-      {repositories.map(repository => (
-        <Suggestion onClick={() => getFirstCommit(repository)} key={repository}>
-          {repository}
-        </Suggestion>
-      ))}
 
-      {firstCommit && (
-        <CommitContainer>
-          {loading ? (
-            <Skeleton />
-          ) : (
+      {loadingRepo ? (
+        <SkeletonContainer>
+          <Skeleton />
+        </SkeletonContainer>
+      ) : (
+        repositories.map(repository => (
+          <Suggestion
+            onClick={() => getFirstCommit(repository)}
+            key={repository}
+          >
+            {repository}
+          </Suggestion>
+        ))
+      )}
+
+      {loadingCommit ? (
+        <SkeletonContainer>
+          <Skeleton />
+        </SkeletonContainer>
+      ) : (
+        firstCommit && (
+          <CommitContainer>
             <a href={firstCommit} target="_blank" rel="noopener noreferrer">
               <CommitButton>
                 See the first commit
@@ -81,8 +119,8 @@ function App() {
                 </span>{" "}
               </CommitButton>
             </a>
-          )}
-        </CommitContainer>
+          </CommitContainer>
+        )
       )}
     </Container>
   );
