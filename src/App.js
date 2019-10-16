@@ -3,13 +3,19 @@ import debounce from "lodash/debounce";
 import { parseLinkHeader } from "./utils";
 import Skeleton from "react-loading-skeleton";
 import client from "./api/client";
-
-import "./App.css";
+import Container, {
+  Title,
+  Desc,
+  Input,
+  Suggestion,
+  CommitContainer,
+  CommitButton
+} from "./elements";
 
 function App() {
   const [repositories, setRepositories] = useState([]);
   const [firstCommit, setFirstCommit] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const getFirstCommit = async repository => {
     setLoading(true);
@@ -35,39 +41,35 @@ function App() {
   }, 500);
 
   return (
-    <div className="App">
-      <p className="title">First Commit</p>
-      <p className="desc">
+    <Container>
+      <Title>First Commit</Title>
+      <Desc>
         Pop up the first commit of any GitHub repo{" "}
         <span role="img" aria-label="rocket">
           🚀
         </span>
-      </p>
+      </Desc>
 
       <form>
-        <input
+        <Input
           placeholder="Name of Github repository"
           onChange={e => searchRepositories(e.target.value)}
           type="text"
         />
       </form>
       {repositories.map(repository => (
-        <div
-          className="suggestion"
-          onClick={() => getFirstCommit(repository)}
-          key={repository}
-        >
+        <Suggestion onClick={() => getFirstCommit(repository)} key={repository}>
           {repository}
-        </div>
+        </Suggestion>
       ))}
 
       {firstCommit && (
-        <div className="commit-container">
+        <CommitContainer>
           {loading ? (
             <Skeleton />
           ) : (
             <a href={firstCommit} target="_blank" rel="noopener noreferrer">
-              <button className="commit-button">
+              <CommitButton>
                 See the first commit
                 <span
                   style={{ marginLeft: "8px" }}
@@ -76,12 +78,12 @@ function App() {
                 >
                   ✅
                 </span>{" "}
-              </button>
+              </CommitButton>
             </a>
           )}
-        </div>
+        </CommitContainer>
       )}
-    </div>
+    </Container>
   );
 }
 

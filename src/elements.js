@@ -1,19 +1,21 @@
-.App {
-  text-align: center;
-}
+import styled from "styled-components";
 
-.title {
+const Container = styled.div`
+  text-align: center;
+`;
+
+const Title = styled.p`
   font-size: 25px;
   font-weight: bold;
   color: #1050ff;
-}
+`;
 
-.desc {
+const Desc = styled.p`
   font-size: 18px;
   color: #1050ff;
-}
+`;
 
-input {
+const Input = styled.input`
   border: 3px solid #1050ff;
   color: #1050ff;
   width: 350px;
@@ -22,9 +24,9 @@ input {
   padding: 10px;
   font-size: 18px;
   margin: 20px 0 20px 0;
-}
+`;
 
-.suggestion {
+const Suggestion = styled.div`
   border: 1px solid #1050ff;
   margin: 0 auto;
   border-radius: 5px;
@@ -33,21 +35,20 @@ input {
   margin-top: 10px;
   padding-top: 10px;
   cursor: pointer;
-}
+  &:hover {
+    background-color: #1050ff;
+    color: white;
+  }
+`;
 
-.suggestion:hover {
-  background-color: #1050ff;
-  color: white;
-}
-
-.commit-container {
+const CommitContainer = styled.div`
   margin: 0 auto;
   margin-top: 20px;
   padding: 10px;
   width: 480px;
-}
+`;
 
-.commit-button {
+const CommitButton = styled.button`
   color: #1050ff;
   background-color: white;
   border: 1px solid #1050ff;
@@ -57,9 +58,11 @@ input {
   margin: 0;
   cursor: pointer;
   border-radius: 5px;
-}
+  &:hover {
+    color: white;
+    background-color: #1050ff;
+  }
+`;
 
-.commit-button:hover {
-  color: white;
-  background-color: #1050ff;
-}
+export default Container;
+export { Title, Desc, Input, Suggestion, CommitContainer, CommitButton };
