@@ -29,7 +29,7 @@ export const Input = styled.input`
   margin: 20px 0 20px 0;
 `;
 
-export const Suggestion = styled.div`
+export const Suggestion = styled.ul`
   border: 1px solid #1050ff;
   border-radius: 5px;
   width: 500px;
@@ -40,6 +40,8 @@ export const Suggestion = styled.div`
   margin-bottom: 10px;
   padding-top: 10px;
   cursor: pointer;
+  background-color: ${props => (props.isActive ? "#1050ff" : "white")};
+  color: ${props => (props.isActive ? "white" : "#1050ff")};
   &:hover {
     background-color: #1050ff;
     color: white;

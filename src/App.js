@@ -65,14 +65,20 @@ function App() {
     setUrl(event.target.value);
   };
 
+  const onChangeDownshift = selection => {
+    alert(selection ? `You selected ${selection}` : "Selection Cleared");
+    getFirstCommit(selection);
+  };
+
   return (
-    <Downshift itemToString={item => (item ? item.value : "")}>
+    <Downshift onChange={onChangeDownshift}>
       {({
         getInputProps,
         getMenuProps,
         getRootProps,
         getItemProps,
-        getLabelProps
+        getLabelProps,
+        highlightedIndex
       }) => (
         <Container>
           <Title>First Commit</Title>
@@ -99,13 +105,15 @@ function App() {
               <Skeleton />
             </SkeletonContainer>
           ) : (
-            repositories.map(repository => (
+            repositories.map((repository, index) => (
               <Suggestion
+                isActive={highlightedIndex === index}
                 onClick={() => getFirstCommit(repository)}
                 key={repository}
                 {...getMenuProps()}
               >
                 <p
+                  style={{ padding: 0, margin: 0 }}
                   {...getItemProps({
                     item: repository,
                     key: repository
