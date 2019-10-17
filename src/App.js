@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { parseLinkHeader } from "./utils";
+import Downshift from "downshift";
 import { useDebounce } from "use-debounce";
 import Skeleton from "react-loading-skeleton";
 import client from "./api/client";
@@ -65,63 +66,82 @@ function App() {
   };
 
   return (
-    <Container>
-      <Title>First Commit</Title>
-      <Desc>
-        Pop up the first commit of any GitHub repo{" "}
-        <span role="img" aria-label="rocket">
-          🚀
-        </span>
-      </Desc>
+    <Downshift itemToString={item => (item ? item.value : "")}>
+      {({
+        getInputProps,
+        getMenuProps,
+        getRootProps,
+        getItemProps,
+        getLabelProps
+      }) => (
+        <Container>
+          <Title>First Commit</Title>
+          <Desc {...getLabelProps()}>
+            Pop up the first commit of any GitHub repo{" "}
+            <span role="img" aria-label="rocket">
+              🚀
+            </span>
+          </Desc>
 
-      <form>
-        <Input
-          placeholder="Name of Github repository"
-          onChange={onChange}
-          type="text"
-          value={url}
-          ref={input => input && input.focus()}
-        />
-      </form>
+          <form {...getRootProps()}>
+            <Input
+              placeholder="Name of Github repository"
+              {...getInputProps()}
+              onChange={onChange}
+              type="text"
+              value={url}
+              ref={input => input && input.focus()}
+            />
+          </form>
 
-      {loadingRepo ? (
-        <SkeletonContainer>
-          <Skeleton />
-        </SkeletonContainer>
-      ) : (
-        repositories.map(repository => (
-          <Suggestion
-            onClick={() => getFirstCommit(repository)}
-            key={repository}
-          >
-            {repository}
-          </Suggestion>
-        ))
-      )}
-
-      {loadingCommit ? (
-        <SkeletonContainer>
-          <Skeleton />
-        </SkeletonContainer>
-      ) : (
-        firstCommit && (
-          <CommitContainer>
-            <a href={firstCommit} target="_blank" rel="noopener noreferrer">
-              <CommitButton>
-                See the first commit
-                <span
-                  style={{ marginLeft: "8px" }}
-                  role="img"
-                  aria-label="checkmark"
+          {loadingRepo ? (
+            <SkeletonContainer>
+              <Skeleton />
+            </SkeletonContainer>
+          ) : (
+            repositories.map(repository => (
+              <Suggestion
+                onClick={() => getFirstCommit(repository)}
+                key={repository}
+                {...getMenuProps()}
+              >
+                <p
+                  {...getItemProps({
+                    item: repository,
+                    key: repository
+                  })}
                 >
-                  ✅
-                </span>{" "}
-              </CommitButton>
-            </a>
-          </CommitContainer>
-        )
+                  {repository}
+                </p>
+              </Suggestion>
+            ))
+          )}
+
+          {loadingCommit ? (
+            <SkeletonContainer>
+              <Skeleton />
+            </SkeletonContainer>
+          ) : (
+            firstCommit && (
+              <CommitContainer>
+                <a href={firstCommit} target="_blank" rel="noopener noreferrer">
+                  <CommitButton>
+                    See the first commit
+                    <span
+                      style={{ marginLeft: "8px" }}
+                      role="img"
+                      aria-label="checkmark"
+                    >
+                      ✅
+                    </span>{" "}
+                  </CommitButton>
+                </a>
+              </CommitContainer>
+            )
+          )}
+        </Container>
       )}
-    </Container>
+    </Downshift>
   );
 }
 

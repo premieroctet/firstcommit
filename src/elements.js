@@ -4,6 +4,7 @@ export const Container = styled.div`
   text-align: center;
   width: 600px;
   margin: 0 auto;
+  font-family: "Maven Pro", sans-serif;
 `;
 
 export const Title = styled.p`
@@ -12,7 +13,7 @@ export const Title = styled.p`
   color: #1050ff;
 `;
 
-export const Desc = styled.p`
+export const Desc = styled.label`
   font-size: 18px;
   color: #1050ff;
 `;
@@ -34,6 +35,7 @@ export const Suggestion = styled.div`
   width: 500px;
   height: 30px;
   margin: 0 auto;
+  font-size: 15px;
   overflow: hidden;
   margin-bottom: 10px;
   padding-top: 10px;
