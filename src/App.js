@@ -73,6 +73,12 @@ function App() {
     getFirstCommit(selection);
   };
 
+  const handleKeyPress = event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
+
   return (
     <Layout>
       <GithubCorner
@@ -111,6 +117,7 @@ function App() {
                 placeholder="Name of Github repository"
                 {...getInputProps()}
                 onChange={onChange}
+                onKeyPress={handleKeyPress}
                 type="text"
                 value={url}
                 ref={input => input && input.focus()}
