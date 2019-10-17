@@ -3,7 +3,10 @@ import { parseLinkHeader } from "./utils";
 import Downshift from "downshift";
 import { useDebounce } from "use-debounce";
 import Skeleton from "react-loading-skeleton";
+import GithubCorner from "react-github-corners";
+import "react-github-corners/dist/GithubCorner.css";
 import client from "./api/client";
+import Footer from "./components/Footer/Footer";
 import {
   Container,
   Title,
@@ -12,7 +15,8 @@ import {
   Suggestion,
   CommitContainer,
   CommitButton,
-  SkeletonContainer
+  SkeletonContainer,
+  Layout
 } from "./elements";
 
 function App() {
@@ -66,90 +70,105 @@ function App() {
   };
 
   const onChangeDownshift = selection => {
-    alert(selection ? `You selected ${selection}` : "Selection Cleared");
     getFirstCommit(selection);
   };
 
   return (
-    <Downshift onChange={onChangeDownshift}>
-      {({
-        getInputProps,
-        getMenuProps,
-        getRootProps,
-        getItemProps,
-        getLabelProps,
-        highlightedIndex
-      }) => (
-        <Container>
-          <Title>First Commit</Title>
-          <Desc {...getLabelProps()}>
-            Pop up the first commit of any GitHub repo{" "}
-            <span role="img" aria-label="rocket">
-              🚀
-            </span>
-          </Desc>
-
-          <form {...getRootProps()}>
-            <Input
-              placeholder="Name of Github repository"
-              {...getInputProps()}
-              onChange={onChange}
-              type="text"
-              value={url}
-              ref={input => input && input.focus()}
-            />
-          </form>
-
-          {loadingRepo ? (
-            <SkeletonContainer>
-              <Skeleton />
-            </SkeletonContainer>
-          ) : (
-            repositories.map((repository, index) => (
-              <Suggestion
-                isActive={highlightedIndex === index}
-                onClick={() => getFirstCommit(repository)}
-                key={repository}
-                {...getMenuProps()}
+    <Layout>
+      <GithubCorner
+        color="white"
+        backgroundColor="#1050FF"
+        url="https://github.com/premieroctet/firstcommit"
+      />
+      <Downshift onChange={onChangeDownshift}>
+        {({
+          getInputProps,
+          getMenuProps,
+          getRootProps,
+          getItemProps,
+          getLabelProps,
+          highlightedIndex
+        }) => (
+          <Container>
+            <Title>First Commit</Title>
+            <Desc {...getLabelProps()}>
+              Pop up the first commit of any GitHub repo{" "}
+              <span
+                style={{ marginLeft: "8px" }}
+                role="img"
+                aria-label="rocket"
               >
-                <p
-                  style={{ padding: 0, margin: 0 }}
-                  {...getItemProps({
-                    item: repository,
-                    key: repository
-                  })}
-                >
-                  {repository}
-                </p>
-              </Suggestion>
-            ))
-          )}
+                🚀
+              </span>
+            </Desc>
 
-          {loadingCommit ? (
-            <SkeletonContainer>
-              <Skeleton />
-            </SkeletonContainer>
-          ) : (
-            firstCommit && (
-              <CommitContainer>
-                <a href={firstCommit} target="_blank" rel="noopener noreferrer">
-                  <CommitButton>
-                    See the first commit
-                    <span
-                      style={{ marginLeft: "8px" }}
-                      role="img"
-                      aria-label="checkmark"
-                    >
-                      ✅
-                    </span>{" "}
-                  </CommitButton>
-                </a>
-              </CommitContainer>
-            )
-          )}
-        </Container>
-      )}
-    </Downshift>
+            <form {...getRootProps()}>
+              <Input
+                placeholder="Name of Github repository"
+                {...getInputProps()}
+                onChange={onChange}
+                type="text"
+                value={url}
+                ref={input => input && input.focus()}
+              />
+            </form>
+
+            {loadingRepo ? (
+              <SkeletonContainer>
+                <Skeleton />
+              </SkeletonContainer>
+            ) : (
+              repositories.map((repository, index) => (
+                <Suggestion
+                  isActive={highlightedIndex === index}
+                  onClick={() => getFirstCommit(repository)}
+                  key={repository}
+                  {...getMenuProps()}
+                >
+                  <p
+                    style={{ padding: 0, margin: 0 }}
+                    {...getItemProps({
+                      item: repository,
+                      key: repository
+                    })}
+                  >
+                    {repository}
+                  </p>
+                </Suggestion>
+              ))
+            )}
+
+            {loadingCommit ? (
+              <SkeletonContainer>
+                <Skeleton />
+              </SkeletonContainer>
+            ) : (
+              firstCommit && (
+                <CommitContainer>
+                  <a
+                    href={firstCommit}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <CommitButton>
+                      See the first commit
+                      <span
+                        style={{ marginLeft: "8px" }}
+                        role="img"
+                        aria-label="checkmark"
+                      >
+                        ✅
+                      </span>{" "}
+                    </CommitButton>
+                  </a>
+                </CommitContainer>
+              )
+            )}
+            <Footer />
+          </Container>
+        )}
+      </Downshift>
+    </Layout>
   );
 }
 

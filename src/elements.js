@@ -1,32 +1,42 @@
 import styled from "styled-components";
 
+export const Layout = styled.div`
+  border: 15px solid #1050ff;
+  padding: 20px;
+  height: 95vh;
+`;
+
 export const Container = styled.div`
   text-align: center;
   width: 600px;
   margin: 0 auto;
-  font-family: "Maven Pro", sans-serif;
+  margin-top: 15%;
+  vertical-align: middle;
 `;
 
 export const Title = styled.p`
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   color: #1050ff;
 `;
 
 export const Desc = styled.label`
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: bold;
   color: #1050ff;
 `;
 
 export const Input = styled.input`
   border: 3px solid #1050ff;
+  font-family: "Lato", sans-serif;
+  font-weight: bold;
   color: #1050ff;
   width: 350px;
   height: 30px;
   border-radius: 5px;
   padding: 10px;
-  font-size: 18px;
-  margin: 20px 0 20px 0;
+  font-size: 15px;
+  margin: 50px 0 20px 0;
 `;
 
 export const Suggestion = styled.ul`
@@ -42,10 +52,6 @@ export const Suggestion = styled.ul`
   cursor: pointer;
   background-color: ${props => (props.isActive ? "#1050ff" : "white")};
   color: ${props => (props.isActive ? "white" : "#1050ff")};
-  &:hover {
-    background-color: #1050ff;
-    color: white;
-  }
 `;
 
 export const CommitContainer = styled.div`
