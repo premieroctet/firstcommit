@@ -52,6 +52,8 @@ export const Suggestion = styled.ul`
   cursor: pointer;
   background-color: ${props => (props.isActive ? "#1050ff" : "white")};
   color: ${props => (props.isActive ? "white" : "#1050ff")};
+  font-weight: ${props => (props.selectedItem ? "bold" : "normal")};
+  font-size: ${props => (props.selectedItem ? "17px" : "15px")};
 `;
 
 export const CommitContainer = styled.div`

@@ -80,14 +80,18 @@ function App() {
         backgroundColor="#1050FF"
         url="https://github.com/premieroctet/firstcommit"
       />
-      <Downshift onChange={onChangeDownshift}>
+      <Downshift
+        itemToString={item => (item ? item.value : "")}
+        onChange={onChangeDownshift}
+      >
         {({
           getInputProps,
           getMenuProps,
           getRootProps,
           getItemProps,
           getLabelProps,
-          highlightedIndex
+          highlightedIndex,
+          selectedItem
         }) => (
           <Container>
             <Title>First Commit</Title>
@@ -121,6 +125,7 @@ function App() {
               repositories.map((repository, index) => (
                 <Suggestion
                   isActive={highlightedIndex === index}
+                  selectedItem={selectedItem === repository}
                   onClick={() => getFirstCommit(repository)}
                   key={repository}
                   {...getMenuProps()}
