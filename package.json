@@ -9,7 +9,8 @@
     "react-dom": "^16.8.6",
     "react-loading-skeleton": "^1.2.0",
     "react-scripts": "3.0.1",
-    "styled-components": "^5.0.0-beta.8-groupsizefix"
+    "styled-components": "^5.0.0-beta.8-groupsizefix",
+    "use-debounce": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

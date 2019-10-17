@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import debounce from "lodash/debounce";
 import { parseLinkHeader } from "./utils";
+import { useDebounce } from "use-debounce";
 import Skeleton from "react-loading-skeleton";
 import client from "./api/client";
 import {
@@ -19,6 +19,9 @@ function App() {
   const [firstCommit, setFirstCommit] = useState();
   const [loadingCommit, setLoadingCommit] = useState(false);
   const [loadingRepo, setLoadingRepo] = useState(false);
+  const queryParams = new URLSearchParams(window.location.search);
+  const [url, setUrl] = useState(queryParams.get("repo") || "");
+  const [debouncedUrl] = useDebounce(url, 500);
 
   const getFirstCommit = async repository => {
     setLoadingCommit(true);
@@ -35,31 +38,27 @@ function App() {
     setLoadingCommit(false);
   };
 
-  const searchRepositories = debounce(async term => {
+  const searchRepositories = async url => {
     if (url === "") {
       setLoadingRepo(false);
       const repositories = [];
       setRepositories(repositories.map(repository => repository.full_name));
+      setFirstCommit();
     } else {
       setLoadingRepo(true);
       let response = await client.get(
-        `/search/repositories?q=${term}&per_page=5`
+        `/search/repositories?q=${url}&per_page=5`
       );
       const repositories = response.data.items;
       setLoadingRepo(false);
       setRepositories(repositories.map(repository => repository.full_name));
     }
-  }, 500);
-
-  const queryParams = new URLSearchParams(window.location.search);
-  const [url, setUrl] = useState(queryParams.get("repo") || null);
+  };
 
   useEffect(() => {
-    if (url) {
-      searchRepositories(url);
-    }
+    searchRepositories(debouncedUrl);
     //eslint-disable-next-line
-  }, [url]);
+  }, [debouncedUrl]);
 
   const onChange = event => {
     setUrl(event.target.value);
