@@ -21,6 +21,12 @@ export const Title = styled.p`
   color: #1050ff;
 `;
 
+export const NoRepo = styled.p`
+  font-size: 17px;
+  text-align: center;
+  color: #1050ff;
+`;
+
 export const Desc = styled.label`
   font-size: 20px;
   font-weight: bold;

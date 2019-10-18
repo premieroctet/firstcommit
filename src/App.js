@@ -17,7 +17,8 @@ import {
   CommitContainer,
   CommitButton,
   SkeletonContainer,
-  Layout
+  Layout,
+  NoRepo
 } from "./elements";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
   const [url, setUrl] = useState(queryParams.get("repo") || "");
   const [debouncedUrl] = useDebounce(url, 500);
   const [firstCommitDate, setFirstCommitDate] = useState("");
+  const [noRepo, setNoRepo] = useState("");
 
   const getFirstCommit = async repository => {
     setLoadingCommit(true);
@@ -53,14 +55,21 @@ function App() {
       const repositories = [];
       setRepositories(repositories.map(repository => repository.full_name));
       setFirstCommit();
+      setNoRepo("");
     } else {
+      setNoRepo("");
       setLoadingRepo(true);
       let response = await client.get(
         `/search/repositories?q=${url}&per_page=5`
       );
       const repositories = response.data.items;
-      setLoadingRepo(false);
       setRepositories(repositories.map(repository => repository.full_name));
+      setLoadingRepo(false);
+      if (repositories.length <= 0) {
+        setNoRepo(
+          "❓ No results were found, the repository may be in private❓"
+        );
+      }
     }
   };
 
@@ -119,12 +128,22 @@ function App() {
             <form {...getRootProps()}>
               <Input
                 placeholder="Name of Github repository"
-                {...getInputProps()}
+                {...getInputProps({
+                  onKeyDown: event => {
+                    switch (event.key) {
+                      case "Tab": {
+                        break;
+                      }
+                      default:
+                        break;
+                    }
+                  }
+                })}
                 onChange={onChange}
                 onKeyPress={handleKeyPress}
                 type="text"
                 value={url}
-                ref={input => input && input.focus()}
+                autoFocus
               />
             </form>
 
@@ -153,7 +172,7 @@ function App() {
                 </Suggestion>
               ))
             )}
-
+            <NoRepo>{noRepo}</NoRepo>
             {loadingCommit ? (
               <SkeletonContainer>
                 <Skeleton />
