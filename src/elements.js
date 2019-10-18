@@ -91,7 +91,8 @@ export const CommitButton = styled.button`
   cursor: pointer;
   line-height: 22px;
   border-radius: 5px;
-  &:hover {
+  &:hover,
+  &:focus {
     color: white;
     background-color: #1050ff;
   }
