@@ -4,9 +4,10 @@ import Downshift from "downshift";
 import { useDebounce } from "use-debounce";
 import Skeleton from "react-loading-skeleton";
 import GithubCorner from "react-github-corners";
-import "react-github-corners/dist/GithubCorner.css";
 import client from "./api/client";
 import Footer from "./components/Footer/Footer";
+import { formatDistance, subDays } from "date-fns";
+import "react-github-corners/dist/GithubCorner.css";
 import {
   Container,
   Title,
@@ -27,19 +28,22 @@ function App() {
   const queryParams = new URLSearchParams(window.location.search);
   const [url, setUrl] = useState(queryParams.get("repo") || "");
   const [debouncedUrl] = useDebounce(url, 500);
+  const [firstCommitDate, setFirstCommitDate] = useState("");
 
   const getFirstCommit = async repository => {
     setLoadingCommit(true);
     let response = await client.get(`/repos/${repository}/commits`);
-
     if (response.headers.link) {
       const links = parseLinkHeader(response.headers.link);
       response = await client.get(links.last);
     }
-
     const lastCommit = response.data[response.data.length - 1];
-
     setFirstCommit(lastCommit.html_url);
+    const dateCommitResult = formatDistance(
+      subDays(new Date(lastCommit.commit.committer.date), 3),
+      new Date()
+    );
+    setFirstCommitDate(dateCommitResult);
     setLoadingCommit(false);
   };
 
@@ -102,7 +106,7 @@ function App() {
           <Container>
             <Title>First Commit</Title>
             <Desc {...getLabelProps()}>
-              Pop up the first commit of any GitHub repo{" "}
+              Dig up the first commit of any GitHub repo{" "}
               <span
                 style={{ marginLeft: "8px" }}
                 role="img"
@@ -163,7 +167,7 @@ function App() {
                     rel="noopener noreferrer"
                   >
                     <CommitButton>
-                      See the first commit
+                      See the first commit {firstCommitDate} ago
                       <span
                         style={{ marginLeft: "8px" }}
                         role="img"
