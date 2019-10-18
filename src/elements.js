@@ -27,6 +27,13 @@ export const NoRepo = styled.p`
   color: #1050ff;
 `;
 
+export const Error = styled.p`
+  font-size: 17px;
+  text-align: center;
+  color: #1050ff;
+  margin-top: 30px;
+`;
+
 export const Desc = styled.label`
   font-size: 20px;
   font-weight: bold;

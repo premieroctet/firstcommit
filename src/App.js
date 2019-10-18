@@ -18,7 +18,8 @@ import {
   CommitButton,
   SkeletonContainer,
   Layout,
-  NoRepo
+  NoRepo,
+  Error
 } from "./elements";
 
 function App() {
@@ -31,21 +32,29 @@ function App() {
   const [debouncedUrl] = useDebounce(url, 500);
   const [firstCommitDate, setFirstCommitDate] = useState("");
   const [noRepo, setNoRepo] = useState("");
+  const [hasError, setError] = useState(false);
 
   const getFirstCommit = async repository => {
+    setError(false);
     setLoadingCommit(true);
-    let response = await client.get(`/repos/${repository}/commits`);
-    if (response.headers.link) {
-      const links = parseLinkHeader(response.headers.link);
-      response = await client.get(links.last);
+    try {
+      let response = await client.get(`/repos/${repository}/commits`);
+      if (response.headers.link) {
+        const links = parseLinkHeader(response.headers.link);
+        response = await client.get(links.last);
+      }
+      const lastCommit = response.data[response.data.length - 1];
+      setFirstCommit(lastCommit.html_url);
+      const dateCommitResult = formatDistance(
+        subDays(new Date(lastCommit.commit.committer.date), 3),
+        new Date()
+      );
+      setFirstCommitDate(dateCommitResult);
+      setLoadingCommit(false);
+    } catch (e) {
+      setError(true);
+      setFirstCommit();
     }
-    const lastCommit = response.data[response.data.length - 1];
-    setFirstCommit(lastCommit.html_url);
-    const dateCommitResult = formatDistance(
-      subDays(new Date(lastCommit.commit.committer.date), 3),
-      new Date()
-    );
-    setFirstCommitDate(dateCommitResult);
     setLoadingCommit(false);
   };
 
@@ -128,17 +137,7 @@ function App() {
             <form {...getRootProps()}>
               <Input
                 placeholder="Name of Github repository"
-                {...getInputProps({
-                  onKeyDown: event => {
-                    switch (event.key) {
-                      case "Tab": {
-                        break;
-                      }
-                      default:
-                        break;
-                    }
-                  }
-                })}
+                {...getInputProps()}
                 onChange={onChange}
                 onKeyPress={handleKeyPress}
                 type="text"
@@ -171,6 +170,16 @@ function App() {
                   </p>
                 </Suggestion>
               ))
+            )}
+            {hasError ? (
+              <Error>
+                Sorry, we can’t find the first commit for this repo{" "}
+                <span role="img" aria-label="sad">
+                  😰
+                </span>
+              </Error>
+            ) : (
+              <React.Fragment></React.Fragment>
             )}
             <NoRepo>{noRepo}</NoRepo>
             {loadingCommit ? (
