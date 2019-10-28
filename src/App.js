@@ -30,7 +30,6 @@ function App() {
   const queryParams = new URLSearchParams(window.location.search);
   const [url, setUrl] = useState(queryParams.get("repo") || "");
   const [debouncedUrl] = useDebounce(url, 500);
-  const [firstCommitDate, setFirstCommitDate] = useState("");
   const [hasError, setError] = useState(false);
 
   const getFirstCommit = async repository => {
@@ -44,11 +43,6 @@ function App() {
       }
       const lastCommit = response.data[response.data.length - 1];
       setFirstCommit(lastCommit);
-      const dateCommitResult = formatDistance(
-        subDays(new Date(lastCommit.commit.committer.date), 3),
-        new Date()
-      );
-      setFirstCommitDate(dateCommitResult);
       setLoadingCommit(false);
     } catch (e) {
       setError(true);
@@ -81,6 +75,7 @@ function App() {
 
   const onChange = event => {
     setUrl(event.target.value);
+    window.history.pushState(null, "/?repo=", "/?repo=" + event.target.value);
   };
 
   const onChangeDownshift = selection => {
@@ -204,7 +199,12 @@ function App() {
                     rel="noopener noreferrer"
                   >
                     <CommitButton>
-                      See the first commit {firstCommitDate} ago
+                      See the first commit{" "}
+                      {formatDistance(
+                        subDays(new Date(firstCommit.commit.committer.date), 3),
+                        new Date()
+                      )}{" "}
+                      ago
                       <span
                         style={{ marginLeft: "8px" }}
                         role="img"
