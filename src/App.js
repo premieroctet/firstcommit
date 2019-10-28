@@ -20,7 +20,7 @@ import {
 } from "./elements";
 
 function App() {
-  var [repositories, setRepositories] = useState();
+  const [repositories, setRepositories] = useState();
   const [loadingRepo, setLoadingRepo] = useState(false);
   const [firstCommit, setFirstCommit] = useState();
   const [loadingCommit, setLoadingCommit] = useState(false);
@@ -40,7 +40,6 @@ function App() {
       }
       const lastCommit = response.data[response.data.length - 1];
       setFirstCommit(lastCommit);
-      setLoadingCommit(false);
     } catch (e) {
       setError(true);
       setFirstCommit(null);

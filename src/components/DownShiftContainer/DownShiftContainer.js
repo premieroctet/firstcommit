@@ -2,11 +2,12 @@ import React from "react";
 import { Input, Suggestion, SkeletonContainer, NoRepo } from "./elements";
 import Downshift from "downshift";
 import Skeleton from "react-loading-skeleton";
+import PropTypes from "prop-types";
 
 const DownShiftContainer = props => {
   const onChange = event => {
     props.setUrl(event.target.value);
-    window.history.pushState(null, "/?repo=", "/?repo=" + event.target.value);
+    window.history.pushState(null, "/?repo=", `/?repo=${event.target.value}`);
   };
 
   const onChangeDownshift = selection => {
@@ -93,3 +94,11 @@ const DownShiftContainer = props => {
 };
 
 export default DownShiftContainer;
+
+DownShiftContainer.propTypes = {
+  setUrl: PropTypes.func,
+  url: PropTypes.string,
+  loadingRepo: PropTypes.bool,
+  repositories: PropTypes.array,
+  getFirstCommit: PropTypes.func
+};
