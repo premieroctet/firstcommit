@@ -24,6 +24,7 @@ export const Suggestion = styled.ul`
   width: 300px;
   margin: 0 auto;
   font-size: 15px;
+  padding: 0;
   overflow: hidden;
   margin-bottom: 10px;
   cursor: pointer;
@@ -47,4 +48,6 @@ export const NoRepo = styled.ul`
   text-align: center;
   color: #1050ff;
   margin-right: 3%;
+  width: 100%;
+  padding: 0;
 `;

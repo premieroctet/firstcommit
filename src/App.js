@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useDebounce } from "use-debounce";
-import Skeleton from "react-loading-skeleton";
-import GithubCorner from "react-github-corners";
-import client from "./api/client";
 import DownShiftContainer from "./components/DownShiftContainer/DownShiftContainer";
-import Footer from "./components/Footer/Footer";
-import { formatDistance, subDays } from "date-fns";
 import "react-github-corners/dist/GithubCorner.css";
+import { formatDistance, subDays } from "date-fns";
+import GithubCorner from "react-github-corners";
+import Footer from "./components/Footer/Footer";
+import Skeleton from "react-loading-skeleton";
+import { useDebounce } from "use-debounce";
 import { parseLinkHeader } from "./utils";
+import client from "./api/client";
 import {
   Container,
   Title,
@@ -66,7 +66,6 @@ function App() {
   useEffect(() => {
     setError(false);
     searchRepositories(debouncedUrl);
-    // eslint-disable-next-line
   }, [debouncedUrl]);
 
   return (
@@ -133,7 +132,6 @@ function App() {
           </CommitContainer>
         )
       )}
-
       <Footer />
     </Layout>
   );

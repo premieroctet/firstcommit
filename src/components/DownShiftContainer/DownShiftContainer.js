@@ -1,8 +1,8 @@
 import React from "react";
 import { Input, Suggestion, SkeletonContainer, NoRepo } from "./elements";
-import Downshift from "downshift";
 import Skeleton from "react-loading-skeleton";
 import PropTypes from "prop-types";
+import Downshift from "downshift";
 
 const DownShiftContainer = props => {
   const onChange = event => {
@@ -53,15 +53,14 @@ const DownShiftContainer = props => {
               {props.repositories &&
                 props.repositories.length === 0 &&
                 props.url !== "" && (
-                  <p>
+                  <>
                     <span role="img" aria-label="help">
                       ❓
                     </span>
-                    No results were found, the repository may be in private
-                    <span role="img" aria-label="help">
-                      ❓
-                    </span>
-                  </p>
+                    <p>
+                      No results were found, the repository may be in private
+                    </p>
+                  </>
                 )}
 
               {props.repositories &&
