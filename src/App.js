@@ -18,12 +18,12 @@ import {
   CommitButton,
   SkeletonContainer,
   Layout,
-  NoRepo,
-  Error
+  Error,
+  NoRepo
 } from "./elements";
 
 function App() {
-  const [repositories, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState();
   const [firstCommit, setFirstCommit] = useState();
   const [loadingCommit, setLoadingCommit] = useState(false);
   const [loadingRepo, setLoadingRepo] = useState(false);
@@ -31,7 +31,6 @@ function App() {
   const [url, setUrl] = useState(queryParams.get("repo") || "");
   const [debouncedUrl] = useDebounce(url, 500);
   const [firstCommitDate, setFirstCommitDate] = useState("");
-  const [noRepo, setNoRepo] = useState("");
   const [hasError, setError] = useState(false);
 
   const getFirstCommit = async repository => {
@@ -44,7 +43,7 @@ function App() {
         response = await client.get(links.last);
       }
       const lastCommit = response.data[response.data.length - 1];
-      setFirstCommit(lastCommit.html_url);
+      setFirstCommit(lastCommit);
       const dateCommitResult = formatDistance(
         subDays(new Date(lastCommit.commit.committer.date), 3),
         new Date()
@@ -53,7 +52,7 @@ function App() {
       setLoadingCommit(false);
     } catch (e) {
       setError(true);
-      setFirstCommit();
+      setFirstCommit(null);
     }
     setLoadingCommit(false);
   };
@@ -61,12 +60,9 @@ function App() {
   const searchRepositories = async url => {
     if (url === "") {
       setLoadingRepo(false);
-      const repositories = [];
-      setRepositories(repositories.map(repository => repository.full_name));
+      setRepositories(null);
       setFirstCommit();
-      setNoRepo("");
     } else {
-      setNoRepo("");
       setLoadingRepo(true);
       let response = await client.get(
         `/search/repositories?q=${url}&per_page=5`
@@ -74,15 +70,11 @@ function App() {
       const repositories = response.data.items;
       setRepositories(repositories.map(repository => repository.full_name));
       setLoadingRepo(false);
-      if (repositories.length <= 0) {
-        setNoRepo(
-          "❓ No results were found, the repository may be in private❓"
-        );
-      }
     }
   };
 
   useEffect(() => {
+    setError(false);
     searchRepositories(debouncedUrl);
     //eslint-disable-next-line
   }, [debouncedUrl]);
@@ -151,37 +143,54 @@ function App() {
                 <Skeleton />
               </SkeletonContainer>
             ) : (
-              repositories.map((repository, index) => (
-                <Suggestion
-                  isActive={highlightedIndex === index}
-                  selectedItem={selectedItem === repository}
-                  onClick={() => getFirstCommit(repository)}
-                  key={repository}
-                  {...getMenuProps()}
-                >
-                  <p
-                    style={{ padding: 0, margin: 0 }}
-                    {...getItemProps({
-                      item: repository,
-                      key: repository
-                    })}
-                  >
-                    {repository}
-                  </p>
-                </Suggestion>
-              ))
+              <NoRepo>
+                {(function() {
+                  if (repositories && repositories.length === 0 && url !== "") {
+                    return (
+                      <p>
+                        <span role="img" aria-label="help">
+                          ❓
+                        </span>
+                        No results were found, the repository may be in private
+                        <span role="img" aria-label="help">
+                          ❓
+                        </span>
+                      </p>
+                    );
+                  } else if (repositories && repositories.length >= 1) {
+                    return repositories.map((repository, index) => (
+                      <Suggestion
+                        isActive={highlightedIndex === index}
+                        selectedItem={selectedItem === repository}
+                        onClick={() => getFirstCommit(repository)}
+                        key={repository}
+                        {...getMenuProps()}
+                      >
+                        <p
+                          style={{ padding: 0, margin: 0 }}
+                          {...getItemProps({
+                            item: repository,
+                            key: repository
+                          })}
+                        >
+                          {repository}
+                        </p>
+                      </Suggestion>
+                    ));
+                  }
+                })()}
+              </NoRepo>
             )}
-            {hasError ? (
+
+            {hasError && (
               <Error>
                 Sorry, we can’t find the first commit for this repo{" "}
                 <span role="img" aria-label="sad">
                   😰
                 </span>
               </Error>
-            ) : (
-              <React.Fragment></React.Fragment>
             )}
-            <NoRepo>{noRepo}</NoRepo>
+
             {loadingCommit ? (
               <SkeletonContainer>
                 <Skeleton />

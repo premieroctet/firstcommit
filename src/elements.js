@@ -21,10 +21,11 @@ export const Title = styled.p`
   color: #1050ff;
 `;
 
-export const NoRepo = styled.p`
+export const NoRepo = styled.ul`
   font-size: 17px;
   text-align: center;
   color: #1050ff;
+  margin-right: 3%;
 `;
 
 export const Error = styled.p`
