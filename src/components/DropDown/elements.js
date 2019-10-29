@@ -11,10 +11,10 @@ export const Input = styled.input`
   border-radius: 5px;
   padding: 10px;
   font-size: 15px;
-  margin: 50px 0 20px 0;
+  margin: 50px 0 0 0;
   @media screen and (max-width: 500px) {
     width: 70%;
-    margin: 30px 0 20px 0;
+    margin: 30px 0 0 0;
   }
 `;
 
