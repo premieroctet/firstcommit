@@ -11,11 +11,9 @@ export const Input = styled.input`
   border-radius: 5px;
   padding: 10px;
   font-size: 15px;
-  margin: 50px 0 0 0;
   @media screen and (max-width: 500px) {
     width: 70%;
     height: 20px;
-    margin: 20px 0 0 0;
   }
 `;
 

@@ -36,6 +36,8 @@ function App() {
       }
       const lastCommit = response.data[response.data.length - 1];
       setFirstCommit(lastCommit);
+      setUrl(repository);
+      window.history.pushState(null, "/?repo=", `/?repo=${repository}`);
       setRepositories(null);
     } catch (e) {
       setError(true);
