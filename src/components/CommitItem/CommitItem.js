@@ -52,5 +52,5 @@ export default CommitItem;
 
 CommitItem.propTypes = {
   loadingCommit: PropTypes.bool,
-  firstCommit: PropTypes.string
+  firstCommit: PropTypes.object
 };

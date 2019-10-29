@@ -16,10 +16,7 @@ const DropDown = props => {
   };
 
   return (
-    <Downshift
-      itemToString={item => (item ? item.value : "")}
-      onChange={onChangeDownshift}
-    >
+    <Downshift onChange={onChangeDownshift}>
       {({
         inputValue,
         getInputProps,
@@ -44,7 +41,6 @@ const DropDown = props => {
             highlightedIndex={highlightedIndex}
             getMenuProps={getMenuProps}
             getItemProps={getItemProps}
-            getFirstCommit={props.getFirstCommit}
             selectedItem={selectedItem}
           />
         </div>

@@ -24,7 +24,6 @@ const ResultsList = props => {
   useEffect(() => {
     searchRepositories(props.inputValue);
     window.history.pushState(null, "/?repo=", `/?repo=${props.inputValue}`);
-    console.log(props.inputValue);
   }, [props.inputValue]);
 
   return (
@@ -62,7 +61,6 @@ const ResultsList = props => {
                 <Suggestion
                   isActive={props.highlightedIndex === index}
                   selectedItem={props.selectedItem === repository}
-                  //onClick={() => props.getFirstCommit(repository)}
                   key={repository}
                   {...props.getMenuProps()}
                 >
