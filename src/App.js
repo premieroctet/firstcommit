@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from "react";
 import DownShiftContainer from "./components/DownShiftContainer/DownShiftContainer";
+import CommitContainer from "./components/CommitContainer/CommitContainer";
+import { Container, Title, Desc, Layout, Error } from "./elements";
 import "react-github-corners/dist/GithubCorner.css";
-import { formatDistance, subDays } from "date-fns";
 import GithubCorner from "react-github-corners";
-import Footer from "./components/Footer/Footer";
-import Skeleton from "react-loading-skeleton";
 import { useDebounce } from "use-debounce";
 import { parseLinkHeader } from "./utils";
 import client from "./api/client";
-import {
-  Container,
-  Title,
-  Desc,
-  CommitContainer,
-  CommitButton,
-  SkeletonContainer,
-  Layout,
-  Error
-} from "./elements";
 
 function App() {
   const [repositories, setRepositories] = useState();
@@ -91,7 +80,6 @@ function App() {
           getFirstCommit={getFirstCommit}
         />
       </Container>
-
       {hasError && (
         <Error>
           Sorry, we can’t find the first commit for this repo{" "}
@@ -100,39 +88,10 @@ function App() {
           </span>
         </Error>
       )}
-
-      {loadingCommit ? (
-        <SkeletonContainer>
-          <Skeleton />
-        </SkeletonContainer>
-      ) : (
-        firstCommit && (
-          <CommitContainer>
-            <a
-              href={firstCommit.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <CommitButton>
-                See the first commit{" "}
-                {formatDistance(
-                  subDays(new Date(firstCommit.commit.committer.date), 3),
-                  new Date()
-                )}{" "}
-                ago
-                <span
-                  style={{ marginLeft: "8px" }}
-                  role="img"
-                  aria-label="checkmark"
-                >
-                  ✅
-                </span>{" "}
-              </CommitButton>
-            </a>
-          </CommitContainer>
-        )
-      )}
-      <Footer />
+      <CommitContainer
+        loadingCommit={loadingCommit}
+        firstCommit={firstCommit}
+      />
     </Layout>
   );
 }
