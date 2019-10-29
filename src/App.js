@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DropDown from "./components/DropDown";
 import CommitItem from "./components/CommitItem";
 import {
@@ -10,19 +10,15 @@ import {
   Img,
   Box
 } from "../src/layout/elements";
-import { useDebounce } from "use-debounce";
 import { parseLinkHeader } from "../src/utils/headers";
 import { motion } from "framer-motion";
 import client from "./api/client";
 
 function App() {
-  const [repositories, setRepositories] = useState();
-  const [loadingRepo, setLoadingRepo] = useState(false);
   const [firstCommit, setFirstCommit] = useState();
   const [loadingCommit, setLoadingCommit] = useState(false);
   const queryParams = new URLSearchParams(window.location.search);
   const [url, setUrl] = useState(queryParams.get("repo") || "");
-  const [debouncedUrl] = useDebounce(url, 500);
   const [hasError, setError] = useState(false);
 
   const getFirstCommit = async repository => {
@@ -38,35 +34,12 @@ function App() {
       setFirstCommit(lastCommit);
       setUrl(repository);
       window.history.pushState(null, "/?repo=", `/?repo=${repository}`);
-      setRepositories(null);
     } catch (e) {
       setError(true);
       setFirstCommit(null);
     }
     setLoadingCommit(false);
   };
-
-  const searchRepositories = async url => {
-    setFirstCommit();
-    if (url === "") {
-      setLoadingRepo(false);
-      setRepositories(null);
-      setFirstCommit();
-    } else {
-      setLoadingRepo(true);
-      let response = await client.get(
-        `/search/repositories?q=${url}&per_page=5`
-      );
-      const repositories = response.data.items;
-      setRepositories(repositories.map(repository => repository.full_name));
-      setLoadingRepo(false);
-    }
-  };
-
-  useEffect(() => {
-    setError(false);
-    searchRepositories(debouncedUrl);
-  }, [debouncedUrl]);
 
   return (
     <Layout>
@@ -81,13 +54,7 @@ function App() {
         <Title>First Commit</Title>
         <Desc>Dig up the first commit of any GitHub repo</Desc>
         <Container>
-          <DropDown
-            setUrl={setUrl}
-            url={url}
-            loadingRepo={loadingRepo}
-            repositories={repositories}
-            getFirstCommit={getFirstCommit}
-          />
+          <DropDown setUrl={setUrl} url={url} getFirstCommit={getFirstCommit} />
         </Container>
         {hasError && (
           <Error>
