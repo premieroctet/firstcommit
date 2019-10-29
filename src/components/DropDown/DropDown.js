@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import PropTypes from "prop-types";
 import Downshift from "downshift";
 
-const DownShiftContainer = props => {
+const DropDown = props => {
   const onChange = event => {
     props.setUrl(event.target.value);
     window.history.pushState(null, "/?repo=", `/?repo=${event.target.value}`);
@@ -92,9 +92,9 @@ const DownShiftContainer = props => {
   );
 };
 
-export default DownShiftContainer;
+export default DropDown;
 
-DownShiftContainer.propTypes = {
+DropDown.propTypes = {
   setUrl: PropTypes.func,
   url: PropTypes.string,
   loadingRepo: PropTypes.bool,

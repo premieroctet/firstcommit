@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import DownShiftContainer from "./components/DownShiftContainer/DownShiftContainer";
-import CommitContainer from "./components/CommitContainer/CommitContainer";
-import { Container, Title, Desc, Layout, Error } from "./elements";
+import DropDown from "./components/DropDown";
+import CommitItem from "./components/CommitItem";
+import { Container, Title, Desc, Layout, Error } from "../src/layout/elements";
 import "react-github-corners/dist/GithubCorner.css";
 import GithubCorner from "react-github-corners";
 import { useDebounce } from "use-debounce";
-import { parseLinkHeader } from "./utils";
+import { parseLinkHeader } from "../src/utils/headers";
 import client from "./api/client";
 
 function App() {
@@ -72,7 +72,7 @@ function App() {
         </span>
       </Desc>
       <Container>
-        <DownShiftContainer
+        <DropDown
           setUrl={setUrl}
           url={url}
           loadingRepo={loadingRepo}
@@ -88,10 +88,7 @@ function App() {
           </span>
         </Error>
       )}
-      <CommitContainer
-        loadingCommit={loadingCommit}
-        firstCommit={firstCommit}
-      />
+      <CommitItem loadingCommit={loadingCommit} firstCommit={firstCommit} />
     </Layout>
   );
 }

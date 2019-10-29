@@ -1,10 +1,11 @@
 import React from "react";
-import Footer from "../Footer/Footer";
+import Footer from "../Footer";
+import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { formatDistance, subDays } from "date-fns";
 import { Commit, CommitButton, SkeletonContainer } from "./elements";
 
-const CommitContainer = props => (
+const CommitItem = props => (
   <>
     {props.loadingCommit ? (
       <SkeletonContainer>
@@ -41,4 +42,9 @@ const CommitContainer = props => (
   </>
 );
 
-export default CommitContainer;
+export default CommitItem;
+
+CommitItem.propTypes = {
+  loadingCommit: PropTypes.bool,
+  firstCommit: PropTypes.string
+};
