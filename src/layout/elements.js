@@ -1,10 +1,19 @@
 import styled from "styled-components";
 
 export const Layout = styled.div`
-  border: 15px solid forestgreen;
   text-align: center;
   padding: 20px;
   height: 95vh;
+  align-items: center;
+`;
+
+export const Box = styled.div`
+  text-align: center;
+  align-items: center;
+  margin-top: 10%;
+  @media screen and (max-width: 500px) {
+    margin-top: 0;
+  }
 `;
 
 export const Container = styled.div`
@@ -23,7 +32,7 @@ export const Title = styled.p`
   margin-top: 30px;
   @media screen and (max-width: 500px) {
     font-size: 25px;
-    margin-top: 10px;
+    margin-top: 0;
   }
 `;
 
@@ -49,7 +58,7 @@ export const Img = styled.img`
 
 export const Desc = styled.label`
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
   color: forestgreen;
   @media screen and (max-width: 500px) {
     font-size: 17px;

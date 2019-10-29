@@ -1,5 +1,4 @@
 import React from "react";
-import Footer from "../Footer";
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { formatDistance, subDays } from "date-fns";
@@ -46,7 +45,6 @@ const CommitItem = props => (
         </Commit>
       )
     )}
-    <Footer />
   </>
 );
 

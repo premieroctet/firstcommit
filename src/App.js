@@ -7,10 +7,9 @@ import {
   Desc,
   Layout,
   Error,
-  Img
+  Img,
+  Box
 } from "../src/layout/elements";
-import "react-github-corners/dist/GithubCorner.css";
-import GithubCorner from "react-github-corners";
 import { useDebounce } from "use-debounce";
 import { parseLinkHeader } from "../src/utils/headers";
 import { motion } from "framer-motion";
@@ -68,43 +67,40 @@ function App() {
 
   return (
     <Layout>
-      <GithubCorner
-        color="white"
-        backgroundColor="forestgreen"
-        url="https://github.com/premieroctet/firstcommit"
-      />
-      <Title>First Commit</Title>
-      <motion.div animate={{ scale: 2 }} transition={{ duration: 3 }}>
-        <Img
-          className="logo"
-          src={require(`./assets/img/logo.png`)}
-          alt="icon-logo"
-        />
-      </motion.div>
-      <Desc>
-        Dig up the first commit of any GitHub repo{" "}
-        <span style={{ marginLeft: "8px" }} role="img" aria-label="rocket">
-          🚀
-        </span>
-      </Desc>
-      <Container>
-        <DropDown
-          setUrl={setUrl}
-          url={url}
-          loadingRepo={loadingRepo}
-          repositories={repositories}
-          getFirstCommit={getFirstCommit}
-        />
-      </Container>
-      {hasError && (
-        <Error>
-          Sorry, we can’t find the first commit for this repo{" "}
-          <span role="img" aria-label="sad">
-            😰
+      <Box>
+        <Title>First Commit</Title>
+        <motion.div animate={{ scale: 2 }} transition={{ duration: 3 }}>
+          <Img
+            className="logo"
+            src={require(`./assets/img/logo.png`)}
+            alt="icon-logo"
+          />
+        </motion.div>
+        <Desc>
+          Dig up the first commit of any GitHub repo{" "}
+          <span style={{ marginLeft: "8px" }} role="img" aria-label="rocket">
+            🚀
           </span>
-        </Error>
-      )}
-      <CommitItem loadingCommit={loadingCommit} firstCommit={firstCommit} />
+        </Desc>
+        <Container>
+          <DropDown
+            setUrl={setUrl}
+            url={url}
+            loadingRepo={loadingRepo}
+            repositories={repositories}
+            getFirstCommit={getFirstCommit}
+          />
+        </Container>
+        {hasError && (
+          <Error>
+            Sorry, we can’t find the first commit for this repo{" "}
+            <span role="img" aria-label="sad">
+              😰
+            </span>
+          </Error>
+        )}
+        <CommitItem loadingCommit={loadingCommit} firstCommit={firstCommit} />
+      </Box>
     </Layout>
   );
 }
