@@ -1,8 +1,16 @@
 import React from "react";
-import { Input, Suggestion, SkeletonContainer, NoRepo } from "./elements";
+import {
+  Input,
+  Suggestion,
+  SkeletonContainer,
+  NoRepo,
+  Img,
+  Title
+} from "./elements";
 import Skeleton from "react-loading-skeleton";
 import PropTypes from "prop-types";
 import Downshift from "downshift";
+import { motion } from "framer-motion";
 
 const DropDown = props => {
   const onChange = event => {
@@ -49,42 +57,51 @@ const DropDown = props => {
               <Skeleton />
             </SkeletonContainer>
           ) : (
-            <NoRepo>
-              {props.repositories &&
-                props.repositories.length === 0 &&
-                props.url !== "" && (
-                  <>
-                    <span role="img" aria-label="help">
-                      ❓
-                    </span>
-                    <p>
-                      No results were found, the repository may be in private
-                    </p>
-                  </>
-                )}
+            <>
+              <NoRepo>
+                {props.repositories &&
+                  props.repositories.length === 0 &&
+                  props.url !== "" && (
+                    <>
+                      <motion.div
+                        animate={{ scale: 2 }}
+                        transition={{ duration: 2 }}
+                      >
+                        <Img
+                          className="icon-reward"
+                          src={require(`../../assets/img/error.png`)}
+                          alt="icon-reward"
+                        />
+                      </motion.div>
+                      <Title>
+                        No results were found, the repository may be in private
+                      </Title>
+                    </>
+                  )}
 
-              {props.repositories &&
-                props.repositories.length >= 1 &&
-                props.repositories.map((repository, index) => (
-                  <Suggestion
-                    isActive={highlightedIndex === index}
-                    selectedItem={selectedItem === repository}
-                    onClick={() => props.getFirstCommit(repository)}
-                    key={repository}
-                    {...getMenuProps()}
-                  >
-                    <p
-                      style={{ padding: 10, margin: 0 }}
-                      {...getItemProps({
-                        item: repository,
-                        key: repository
-                      })}
+                {props.repositories &&
+                  props.repositories.length >= 1 &&
+                  props.repositories.map((repository, index) => (
+                    <Suggestion
+                      isActive={highlightedIndex === index}
+                      selectedItem={selectedItem === repository}
+                      onClick={() => props.getFirstCommit(repository)}
+                      key={repository}
+                      {...getMenuProps()}
                     >
-                      {repository}
-                    </p>
-                  </Suggestion>
-                ))}
-            </NoRepo>
+                      <p
+                        style={{ padding: 10, margin: 0 }}
+                        {...getItemProps({
+                          item: repository,
+                          key: repository
+                        })}
+                      >
+                        {repository}
+                      </p>
+                    </Suggestion>
+                  ))}
+              </NoRepo>
+            </>
           )}
         </div>
       )}

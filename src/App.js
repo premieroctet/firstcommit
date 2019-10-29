@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import DropDown from "./components/DropDown";
 import CommitItem from "./components/CommitItem";
-import { Container, Title, Desc, Layout, Error } from "../src/layout/elements";
+import {
+  Container,
+  Title,
+  Desc,
+  Layout,
+  Error,
+  Img
+} from "../src/layout/elements";
 import "react-github-corners/dist/GithubCorner.css";
 import GithubCorner from "react-github-corners";
 import { useDebounce } from "use-debounce";
 import { parseLinkHeader } from "../src/utils/headers";
+import { motion } from "framer-motion";
 import client from "./api/client";
 
 function App() {
@@ -37,6 +45,7 @@ function App() {
   };
 
   const searchRepositories = async url => {
+    setFirstCommit();
     if (url === "") {
       setLoadingRepo(false);
       setRepositories(null);
@@ -61,10 +70,17 @@ function App() {
     <Layout>
       <GithubCorner
         color="white"
-        backgroundColor="#1050FF"
+        backgroundColor="forestgreen"
         url="https://github.com/premieroctet/firstcommit"
       />
       <Title>First Commit</Title>
+      <motion.div animate={{ scale: 2 }} transition={{ duration: 3 }}>
+        <Img
+          className="logo"
+          src={require(`./assets/img/logo.png`)}
+          alt="icon-logo"
+        />
+      </motion.div>
       <Desc>
         Dig up the first commit of any GitHub repo{" "}
         <span style={{ marginLeft: "8px" }} role="img" aria-label="rocket">

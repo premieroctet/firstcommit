@@ -3,7 +3,8 @@ import Footer from "../Footer";
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { formatDistance, subDays } from "date-fns";
-import { Commit, CommitButton, SkeletonContainer } from "./elements";
+import { Commit, CommitButton, SkeletonContainer, Img } from "./elements";
+import { motion } from "framer-motion";
 
 const CommitItem = props => (
   <>
@@ -14,6 +15,13 @@ const CommitItem = props => (
     ) : (
       props.firstCommit && (
         <Commit>
+          <motion.div animate={{ scale: 1.5 }} transition={{ duration: 1.5 }}>
+            <Img
+              className="icon-reward"
+              src={require(`../../assets/img/win.png`)}
+              alt="icon-reward"
+            />
+          </motion.div>
           <a
             href={props.firstCommit.html_url}
             target="_blank"

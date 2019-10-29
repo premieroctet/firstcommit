@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const FooterWrapper = styled.footer`
   position: fixed;
   bottom: 5px;
-  background-color: #1050ff;
+  background-color: forestgreen;
   font-size: 1em;
   font-weight: bold;
   right: 0;
