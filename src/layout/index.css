@@ -3,7 +3,7 @@
 body {
   margin: 0;
   font-family: "Raleway", sans-serif;
-  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }

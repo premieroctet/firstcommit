@@ -24,7 +24,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.p`
-  font-size: 30px;
+  font-size: 65px;
   text-align: center;
   font-weight: bold;
   color: forestgreen;

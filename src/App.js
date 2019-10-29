@@ -36,6 +36,7 @@ function App() {
       }
       const lastCommit = response.data[response.data.length - 1];
       setFirstCommit(lastCommit);
+      setRepositories(null);
     } catch (e) {
       setError(true);
       setFirstCommit(null);
@@ -68,7 +69,6 @@ function App() {
   return (
     <Layout>
       <Box>
-        <Title>First Commit</Title>
         <motion.div animate={{ scale: 2 }} transition={{ duration: 3 }}>
           <Img
             className="logo"
@@ -76,12 +76,8 @@ function App() {
             alt="icon-logo"
           />
         </motion.div>
-        <Desc>
-          Dig up the first commit of any GitHub repo{" "}
-          <span style={{ marginLeft: "8px" }} role="img" aria-label="rocket">
-            🚀
-          </span>
-        </Desc>
+        <Title>First Commit</Title>
+        <Desc>Dig up the first commit of any GitHub repo</Desc>
         <Container>
           <DropDown
             setUrl={setUrl}
