@@ -1,34 +1,37 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import { motion } from "framer-motion";
 import client from "../../api/client";
 import { Suggestion, SkeletonContainer, NoRepo, Img, Title } from "./elements";
+import debounce from "lodash/debounce";
 
 const ResultsList = props => {
   const [repositories, setRepositories] = useState();
   const [loadingRepo, setLoadingRepo] = useState(false);
 
-  const searchRepositories = async url => {
-    if (url === "") {
-      setRepositories(null);
-      setLoadingRepo(false);
-      props.setFirstCommit();
-    } else {
+  const searchRepositories = debounce(async () => {
+    if (props.inputValue) {
       setLoadingRepo(true);
+
       let response = await client.get(
-        `/search/repositories?q=${url}&per_page=5`
+        `/search/repositories?q=${props.inputValue}&per_page=5`
       );
+
       const repositories = response.data.items;
       setRepositories(repositories.map(repository => repository.full_name));
       setLoadingRepo(false);
     }
-  };
+  }, 400);
 
-  useCallback(() => {
-    searchRepositories(props.inputValue);
-    console.log(props.inputValue);
+  useEffect(() => {
     window.history.pushState(null, "/?repo=", `/?repo=${props.inputValue}`);
-  }, [props.inputValue, searchRepositories]);
+    searchRepositories();
+
+    return () => {
+      searchRepositories.cancel();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.inputValue]);
 
   return (
     <div>
