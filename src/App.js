@@ -54,7 +54,12 @@ function App() {
         <Title>First Commit</Title>
         <Desc>Dig up the first commit of any GitHub repo</Desc>
         <Container>
-          <DropDown setUrl={setUrl} url={url} getFirstCommit={getFirstCommit} />
+          <DropDown
+            setUrl={setUrl}
+            url={url}
+            getFirstCommit={getFirstCommit}
+            setFirstCommit={setFirstCommit}
+          />
         </Container>
         {hasError && (
           <Error>

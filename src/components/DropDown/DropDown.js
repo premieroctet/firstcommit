@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "./elements";
+import { Input, ResultsContainer } from "./elements";
 import PropTypes from "prop-types";
 import Downshift from "downshift";
 import ResultsList from "./ResultsList";
@@ -28,21 +28,22 @@ const DropDown = props => {
         <div>
           <form>
             <Input
-              placeholder="Name of Github repository"
               {...getInputProps()}
+              placeholder="Name of Github repository"
               onKeyPress={handleKeyPress}
               type="text"
               autoFocus
             />
           </form>
-
-          <ResultsList
-            inputValue={inputValue}
-            highlightedIndex={highlightedIndex}
-            getMenuProps={getMenuProps}
-            getItemProps={getItemProps}
-            selectedItem={selectedItem}
-          />
+          <ResultsContainer {...getMenuProps()}>
+            <ResultsList
+              inputValue={inputValue}
+              highlightedIndex={highlightedIndex}
+              getItemProps={getItemProps}
+              selectedItem={selectedItem}
+              setFirstCommit={props.setFirstCommit}
+            />
+          </ResultsContainer>
         </div>
       )}
     </Downshift>

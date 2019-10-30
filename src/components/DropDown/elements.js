@@ -47,9 +47,14 @@ export const NoRepo = styled.ul`
   font-size: 17px;
   text-align: center;
   color: forestgreen;
-  margin-right: 3%;
   width: 100%;
   padding: 0;
+`;
+
+export const ResultsContainer = styled.ul`
+  font-size: 17px;
+  text-align: center;
+  margin-right: 3.5%;
 `;
 
 export const Img = styled.img`

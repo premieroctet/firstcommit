@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import Skeleton from "react-loading-skeleton";
 import { motion } from "framer-motion";
 import client from "../../api/client";
@@ -10,6 +10,9 @@ const ResultsList = props => {
 
   const searchRepositories = async url => {
     if (url === "") {
+      setRepositories(null);
+      setLoadingRepo(false);
+      props.setFirstCommit();
     } else {
       setLoadingRepo(true);
       let response = await client.get(
@@ -21,10 +24,11 @@ const ResultsList = props => {
     }
   };
 
-  useEffect(() => {
+  useCallback(() => {
     searchRepositories(props.inputValue);
+    console.log(props.inputValue);
     window.history.pushState(null, "/?repo=", `/?repo=${props.inputValue}`);
-  }, [props.inputValue]);
+  }, [props.inputValue, searchRepositories]);
 
   return (
     <div>
@@ -62,7 +66,6 @@ const ResultsList = props => {
                   isActive={props.highlightedIndex === index}
                   selectedItem={props.selectedItem === repository}
                   key={repository}
-                  {...props.getMenuProps()}
                 >
                   <p
                     style={{ padding: 10, margin: 0 }}
