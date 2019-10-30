@@ -41,6 +41,7 @@ const DropDown = props => {
               highlightedIndex={highlightedIndex}
               getItemProps={getItemProps}
               selectedItem={selectedItem}
+              setFirstCommit={props.setFirstCommit}
             />
           </ResultsContainer>
         </div>

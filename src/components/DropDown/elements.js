@@ -46,6 +46,7 @@ export const SkeletonContainer = styled.div`
 export const NoRepo = styled.div`
   font-size: 17px;
   text-align: center;
+  align-items: center;
   color: forestgreen;
   width: 100%;
   padding: 0;

@@ -24,19 +24,21 @@ function App() {
   const getFirstCommit = async repository => {
     setError(false);
     setLoadingCommit(true);
-    try {
-      let response = await client.get(`/repos/${repository}/commits`);
-      if (response.headers.link) {
-        const links = parseLinkHeader(response.headers.link);
-        response = await client.get(links.last);
+    if (repository !== "") {
+      try {
+        let response = await client.get(`/repos/${repository}/commits`);
+        if (response.headers.link) {
+          const links = parseLinkHeader(response.headers.link);
+          response = await client.get(links.last);
+        }
+        const lastCommit = response.data[response.data.length - 1];
+        setFirstCommit(lastCommit);
+        setUrl(repository);
+        window.history.pushState(null, "/?repo=", `/?repo=${repository}`);
+      } catch (e) {
+        setError(true);
+        setFirstCommit(null);
       }
-      const lastCommit = response.data[response.data.length - 1];
-      setFirstCommit(lastCommit);
-      setUrl(repository);
-      window.history.pushState(null, "/?repo=", `/?repo=${repository}`);
-    } catch (e) {
-      setError(true);
-      setFirstCommit(null);
     }
     setLoadingCommit(false);
   };
@@ -55,7 +57,6 @@ function App() {
         <Desc>Dig up the first commit of any GitHub repo</Desc>
         <Container>
           <DropDown
-            setUrl={setUrl}
             url={url}
             getFirstCommit={getFirstCommit}
             setFirstCommit={setFirstCommit}

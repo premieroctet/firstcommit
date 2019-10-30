@@ -10,7 +10,7 @@ const ResultsList = props => {
   const [loadingRepo, setLoadingRepo] = useState(false);
 
   const searchRepositories = debounce(async () => {
-    if (props.inputValue) {
+    if (props.inputValue !== "") {
       setLoadingRepo(true);
 
       let response = await client.get(
@@ -20,13 +20,17 @@ const ResultsList = props => {
       const repositories = response.data.items;
       setRepositories(repositories.map(repository => repository.full_name));
       setLoadingRepo(false);
+    } else {
+      setRepositories();
+      props.setFirstCommit();
+      setLoadingRepo(false);
     }
   }, 400);
 
   useEffect(() => {
     window.history.pushState(null, "/?repo=", `/?repo=${props.inputValue}`);
     searchRepositories();
-
+    props.setFirstCommit();
     return () => {
       searchRepositories.cancel();
     };
