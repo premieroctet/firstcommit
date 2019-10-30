@@ -23,7 +23,9 @@ const DropDown = props => {
         getMenuProps,
         getItemProps,
         highlightedIndex,
-        selectedItem
+        selectedItem,
+        clearSelection,
+        isOpen
       }) => (
         <div>
           <form>
@@ -35,15 +37,19 @@ const DropDown = props => {
               autoFocus
             />
           </form>
-          <ResultsContainer {...getMenuProps()}>
-            <ResultsList
-              inputValue={inputValue}
-              highlightedIndex={highlightedIndex}
-              getItemProps={getItemProps}
-              selectedItem={selectedItem}
-              setFirstCommit={props.setFirstCommit}
-            />
-          </ResultsContainer>
+
+          {isOpen && (
+            <ResultsContainer {...getMenuProps()}>
+              <ResultsList
+                inputValue={inputValue}
+                highlightedIndex={highlightedIndex}
+                getItemProps={getItemProps}
+                selectedItem={selectedItem}
+                clearSelection={clearSelection}
+                setFirstCommit={props.setFirstCommit}
+              />
+            </ResultsContainer>
+          )}
         </div>
       )}
     </Downshift>

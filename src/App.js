@@ -24,7 +24,7 @@ function App() {
   const getFirstCommit = async repository => {
     setError(false);
     setLoadingCommit(true);
-    if (repository !== "") {
+    if (repository) {
       try {
         let response = await client.get(`/repos/${repository}/commits`);
         if (response.headers.link) {

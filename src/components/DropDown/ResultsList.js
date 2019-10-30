@@ -10,7 +10,7 @@ const ResultsList = props => {
   const [loadingRepo, setLoadingRepo] = useState(false);
 
   const searchRepositories = debounce(async () => {
-    if (props.inputValue !== "") {
+    if (props.inputValue) {
       setLoadingRepo(true);
 
       let response = await client.get(
@@ -21,9 +21,10 @@ const ResultsList = props => {
       setRepositories(repositories.map(repository => repository.full_name));
       setLoadingRepo(false);
     } else {
-      setRepositories();
-      props.setFirstCommit();
+      setRepositories(null);
+      props.setFirstCommit(null);
       setLoadingRepo(false);
+      props.clearSelection();
     }
   }, 400);
 
@@ -36,7 +37,6 @@ const ResultsList = props => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.inputValue]);
-
   return (
     <div>
       {loadingRepo ? (
