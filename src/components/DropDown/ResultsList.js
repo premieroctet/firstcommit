@@ -12,11 +12,9 @@ const ResultsList = props => {
   const searchRepositories = debounce(async () => {
     if (props.inputValue) {
       setLoadingRepo(true);
-
       let response = await client.get(
         `/search/repositories?q=${props.inputValue}&per_page=5`
       );
-
       const repositories = response.data.items;
       setRepositories(repositories.map(repository => repository.full_name));
       setLoadingRepo(false);

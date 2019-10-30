@@ -27,7 +27,7 @@ const CommitItem = props => (
             rel="noopener noreferrer"
           >
             <CommitButton>
-              See the first commit{" "}
+              First commit of {props.repositories}{" "}
               {formatDistance(
                 subDays(new Date(props.firstCommit.commit.committer.date), 3),
                 new Date()

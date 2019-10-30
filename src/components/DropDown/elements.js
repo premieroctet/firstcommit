@@ -14,18 +14,15 @@ export const Input = styled.input`
   @media screen and (max-width: 500px) {
     width: 70%;
     height: 20px;
+    margin-top: 20px;
   }
 `;
 
 export const Suggestion = styled.ul`
-  border: 1px solid forestgreen;
-  border-radius: 5px;
-  width: 300px;
+  width: 100%;
   margin: 0 auto;
   font-size: 15px;
   padding: 0;
-  overflow: hidden;
-  margin-bottom: 10px;
   cursor: pointer;
   background-color: ${props => (props.isActive ? "forestgreen" : "white")};
   color: ${props => (props.isActive ? "white" : "forestgreen")};
@@ -48,14 +45,20 @@ export const NoRepo = styled.div`
   text-align: center;
   align-items: center;
   color: forestgreen;
-  width: 100%;
+  border: 1px solid forestgreen;
+  border-radius: 2px;
   padding: 0;
+  width: 20%;
+  margin: 0 auto;
 `;
 
 export const ResultsContainer = styled.ul`
   font-size: 17px;
   text-align: center;
   margin-right: 3.5%;
+  @media screen and (max-width: 500px) {
+    margin-right: 10%;
+  }
 `;
 
 export const Img = styled.img`
