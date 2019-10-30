@@ -16,7 +16,7 @@ const DropDown = props => {
   };
 
   return (
-    <Downshift onChange={onChangeDownshift}>
+    <Downshift initialInputValue={props.url} onChange={onChangeDownshift}>
       {({
         inputValue,
         getInputProps,
