@@ -59,6 +59,7 @@ function App() {
             url={url}
             getFirstCommit={getFirstCommit}
             setFirstCommit={setFirstCommit}
+            firstCommit={firstCommit}
           />
         </Container>
         {hasError && (

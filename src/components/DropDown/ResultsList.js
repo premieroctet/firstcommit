@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import client from "../../api/client";
+import debounce from "lodash/debounce";
 import {
   Suggestion,
   SkeletonContainer,
@@ -10,7 +11,6 @@ import {
   Floating,
   RepoTitle
 } from "./elements";
-import debounce from "lodash/debounce";
 
 const ResultsList = props => {
   const [repositories, setRepositories] = useState();
@@ -37,11 +37,13 @@ const ResultsList = props => {
     window.history.pushState(null, "/?repo=", `/?repo=${props.inputValue}`);
     searchRepositories();
     props.setFirstCommit();
+    setLoadingRepo(true);
     return () => {
       searchRepositories.cancel();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.inputValue]);
+
   return (
     <div>
       {loadingRepo ? (

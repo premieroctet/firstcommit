@@ -24,8 +24,7 @@ const DropDown = props => {
         getItemProps,
         highlightedIndex,
         selectedItem,
-        clearSelection,
-        isOpen
+        clearSelection
       }) => (
         <div>
           <form>
@@ -38,7 +37,7 @@ const DropDown = props => {
             />
           </form>
 
-          {isOpen && (
+          {inputValue && (
             <ResultsContainer {...getMenuProps()}>
               <ResultsList
                 inputValue={inputValue}
@@ -47,6 +46,7 @@ const DropDown = props => {
                 selectedItem={selectedItem}
                 clearSelection={clearSelection}
                 setFirstCommit={props.setFirstCommit}
+                firstCommit={props.firstCommit}
               />
             </ResultsContainer>
           )}
