@@ -23,6 +23,21 @@ export const Container = styled.div`
   vertical-align: middle;
 `;
 
+export const Levitation = styled.div`
+  animation: float 3.5s ease-in-out infinite;
+  @keyframes float {
+    0% {
+      transform: translatey(0px);
+    }
+    50% {
+      transform: translatey(-13px);
+    }
+    100% {
+      transform: translatey(0px);
+    }
+  }
+`;
+
 export const Title = styled.p`
   font-size: 65px;
   text-align: center;
@@ -45,8 +60,8 @@ export const Error = styled.p`
 `;
 
 export const Img = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 150px;
+  height: 150px;
   margin: 0 auto;
   display: block;
   margin-top: 40px;

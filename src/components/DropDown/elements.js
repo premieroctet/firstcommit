@@ -25,12 +25,52 @@ export const Suggestion = styled.ul`
   padding: 0;
   cursor: pointer;
   background-color: ${props => (props.isActive ? "forestgreen" : "white")};
-  color: ${props => (props.isActive ? "white" : "forestgreen")};
   font-weight: ${props => (props.selectedItem ? "bold" : "normal")};
   font-size: ${props => (props.selectedItem ? "18px" : "15px")};
   @media screen and (max-width: 500px) {
     width: 70%;
     font-size: ${props => (props.selectedItem ? "15px" : "12px")};
+  }
+`;
+
+export const Floating = styled.div`
+  -webkit-animation-name: tada;
+  animation-name: tada;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  @keyframes tada {
+    from {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
+
+    10%,
+    20% {
+      -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+    }
+
+    30%,
+    50%,
+    70%,
+    90% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+    }
+
+    40%,
+    60%,
+    80% {
+      -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+    }
+
+    to {
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
+    }
   }
 `;
 
@@ -48,7 +88,7 @@ export const NoRepo = styled.div`
   border: 1px solid forestgreen;
   border-radius: 2px;
   padding: 0;
-  width: 20%;
+  width: 25%;
   margin: 0 auto;
 `;
 
@@ -62,15 +102,22 @@ export const ResultsContainer = styled.ul`
 `;
 
 export const Img = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   margin: 0 auto;
   display: block;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 
 export const Title = styled.p`
   font-size: 17px;
-  margin-top: 50px;
+  margin-top: 20px;
   color: forestgreen;
+`;
+
+export const RepoTitle = styled.p`
+  font-size: 17px;
+  color: forestgreen;
+  overflow: hidden;
+  color: ${props => (props.isActive ? "white" : "forestgreen")};
 `;

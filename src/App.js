@@ -8,10 +8,10 @@ import {
   Layout,
   Error,
   Img,
-  Box
+  Box,
+  Levitation
 } from "../src/layout/elements";
 import { parseLinkHeader } from "../src/utils/headers";
-import { motion } from "framer-motion";
 import client from "./api/client";
 
 function App() {
@@ -45,13 +45,13 @@ function App() {
   return (
     <Layout>
       <Box>
-        <motion.div animate={{ scale: 2 }} transition={{ duration: 3 }}>
+        <Levitation>
           <Img
             className="logo"
             src={require(`./assets/img/logo.png`)}
             alt="icon-logo"
           />
-        </motion.div>
+        </Levitation>
         <Title>First Commit</Title>
         <Desc>Dig up the first commit of any GitHub repo</Desc>
         <Container>

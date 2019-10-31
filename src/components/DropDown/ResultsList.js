@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
-import { motion } from "framer-motion";
 import client from "../../api/client";
-import { Suggestion, SkeletonContainer, NoRepo, Img, Title } from "./elements";
+import {
+  Suggestion,
+  SkeletonContainer,
+  NoRepo,
+  Img,
+  Title,
+  Floating,
+  RepoTitle
+} from "./elements";
 import debounce from "lodash/debounce";
 
 const ResultsList = props => {
@@ -48,16 +55,13 @@ const ResultsList = props => {
               repositories.length === 0 &&
               props.inputValue !== "" && (
                 <>
-                  <motion.div
-                    animate={{ scale: 2 }}
-                    transition={{ duration: 2 }}
-                  >
+                  <Floating>
                     <Img
                       className="icon-reward"
                       src={require(`../../assets/img/error.png`)}
                       alt="icon-reward"
                     />
-                  </motion.div>
+                  </Floating>
                   <Title>
                     No results were found, the repository may be in private
                   </Title>
@@ -72,7 +76,9 @@ const ResultsList = props => {
                   selectedItem={props.selectedItem === repository}
                   key={repository}
                 >
-                  <p
+                  <RepoTitle
+                    isActive={props.highlightedIndex === index}
+                    selectedItem={props.selectedItem === repository}
                     style={{ padding: 10, margin: 0 }}
                     {...props.getItemProps({
                       item: repository,
@@ -80,7 +86,7 @@ const ResultsList = props => {
                     })}
                   >
                     {repository}
-                  </p>
+                  </RepoTitle>
                 </Suggestion>
               ))}
           </NoRepo>
