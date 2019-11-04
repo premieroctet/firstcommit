@@ -15,6 +15,7 @@ import { parseLinkHeader } from "../src/utils/headers";
 import client from "./api/client";
 
 function App() {
+  const [repositories, setRepositories] = useState();
   const [firstCommit, setFirstCommit] = useState();
   const [loadingCommit, setLoadingCommit] = useState(false);
   const queryParams = new URLSearchParams(window.location.search);
@@ -39,6 +40,8 @@ function App() {
         setFirstCommit(null);
       }
     }
+    setRepositories();
+    console.log(repositories);
     setLoadingCommit(false);
   };
 
@@ -60,6 +63,8 @@ function App() {
             getFirstCommit={getFirstCommit}
             setFirstCommit={setFirstCommit}
             firstCommit={firstCommit}
+            repositories={repositories}
+            setRepositories={setRepositories}
           />
         </Container>
         {hasError && (
@@ -73,7 +78,7 @@ function App() {
         <CommitItem
           loadingCommit={loadingCommit}
           firstCommit={firstCommit}
-          repositories={url}
+          url={url}
         />
       </Box>
     </Layout>

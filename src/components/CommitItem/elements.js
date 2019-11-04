@@ -20,6 +20,7 @@ export const CommitButton = styled.button`
   font-weight: bold;
   margin: 0 auto;
   margin-top: 25px;
+  margin-bottom: 30px;
   cursor: pointer;
   line-height: 22px;
   border-radius: 5px;

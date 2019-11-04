@@ -32,7 +32,7 @@ const CommitItem = props => (
             rel="noopener noreferrer"
           >
             <CommitButton>
-              First commit of {props.repositories}{" "}
+              First commit of {props.url}{" "}
               {formatDistance(
                 subDays(new Date(props.firstCommit.commit.committer.date), 3),
                 new Date()

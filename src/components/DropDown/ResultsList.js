@@ -13,9 +13,7 @@ import {
 } from "./elements";
 
 const ResultsList = props => {
-  const [repositories, setRepositories] = useState();
   const [loadingRepo, setLoadingRepo] = useState(false);
-
   const searchRepositories = debounce(async () => {
     if (props.inputValue) {
       setLoadingRepo(true);
@@ -23,10 +21,12 @@ const ResultsList = props => {
         `/search/repositories?q=${props.inputValue}&per_page=5`
       );
       const repositories = response.data.items;
-      setRepositories(repositories.map(repository => repository.full_name));
+      props.setRepositories(
+        repositories.map(repository => repository.full_name)
+      );
       setLoadingRepo(false);
     } else {
-      setRepositories(null);
+      props.setRepositories(null);
       props.setFirstCommit(null);
       setLoadingRepo(false);
       props.clearSelection();
@@ -51,48 +51,46 @@ const ResultsList = props => {
           <Skeleton />
         </SkeletonContainer>
       ) : (
-        <>
-          <NoRepo>
-            {repositories &&
-              repositories.length === 0 &&
-              props.inputValue !== "" && (
-                <>
-                  <Floating>
-                    <Img
-                      className="icon-reward"
-                      src={require(`../../assets/img/error.png`)}
-                      alt="icon-reward"
-                    />
-                  </Floating>
-                  <Title>
-                    No results were found, the repository may be in private
-                  </Title>
-                </>
-              )}
+        <NoRepo>
+          {props.repositories &&
+            props.repositories.length === 0 &&
+            props.inputValue !== "" && (
+              <>
+                <Floating>
+                  <Img
+                    className="icon-reward"
+                    src={require(`../../assets/img/error.png`)}
+                    alt="icon-reward"
+                  />
+                </Floating>
+                <Title>
+                  No results were found, the repository may be in private
+                </Title>
+              </>
+            )}
 
-            {repositories &&
-              repositories.length >= 1 &&
-              repositories.map((repository, index) => (
-                <Suggestion
+          {props.repositories &&
+            props.repositories.length >= 1 &&
+            props.repositories.map((repository, index) => (
+              <Suggestion
+                isActive={props.highlightedIndex === index}
+                selectedItem={props.selectedItem === repository}
+                key={repository}
+              >
+                <RepoTitle
                   isActive={props.highlightedIndex === index}
                   selectedItem={props.selectedItem === repository}
-                  key={repository}
+                  style={{ padding: 10, margin: 0 }}
+                  {...props.getItemProps({
+                    item: repository,
+                    key: repository
+                  })}
                 >
-                  <RepoTitle
-                    isActive={props.highlightedIndex === index}
-                    selectedItem={props.selectedItem === repository}
-                    style={{ padding: 10, margin: 0 }}
-                    {...props.getItemProps({
-                      item: repository,
-                      key: repository
-                    })}
-                  >
-                    {repository}
-                  </RepoTitle>
-                </Suggestion>
-              ))}
-          </NoRepo>
-        </>
+                  {repository}
+                </RepoTitle>
+              </Suggestion>
+            ))}
+        </NoRepo>
       )}
     </div>
   );

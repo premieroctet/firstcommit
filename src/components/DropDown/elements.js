@@ -85,11 +85,16 @@ export const NoRepo = styled.div`
   text-align: center;
   align-items: center;
   color: forestgreen;
-  border: 1px solid forestgreen;
   border-radius: 2px;
   padding: 0;
   width: 25%;
   margin: 0 auto;
+  @media screen and (max-width: 800px) {
+    width: 50%;
+  }
+  @media screen and (max-width: 500px) {
+    width: 80%;
+  }
 `;
 
 export const ResultsContainer = styled.ul`

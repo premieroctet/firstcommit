@@ -47,6 +47,8 @@ const DropDown = props => {
                 clearSelection={clearSelection}
                 setFirstCommit={props.setFirstCommit}
                 firstCommit={props.firstCommit}
+                repositories={props.repositories}
+                setRepositories={props.setRepositories}
               />
             </ResultsContainer>
           )}
