@@ -23,6 +23,7 @@ export const Suggestion = styled.ul`
   margin: 0 auto;
   font-size: 15px;
   padding: 0;
+  border-radius: 5px;
   cursor: pointer;
   background-color: ${props => (props.isActive ? "forestgreen" : "white")};
   font-weight: ${props => (props.selectedItem ? "bold" : "normal")};

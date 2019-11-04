@@ -4,9 +4,16 @@ import PropTypes from "prop-types";
 import Downshift from "downshift";
 import ResultsList from "./ResultsList";
 
-const DropDown = props => {
+const DropDown = ({
+  getFirstCommit,
+  url,
+  setFirstCommit,
+  firstCommit,
+  repositories,
+  setRepositories
+}) => {
   const onChangeDownshift = selection => {
-    props.getFirstCommit(selection);
+    getFirstCommit(selection);
   };
 
   const handleKeyPress = event => {
@@ -16,7 +23,7 @@ const DropDown = props => {
   };
 
   return (
-    <Downshift initialInputValue={props.url} onChange={onChangeDownshift}>
+    <Downshift initialInputValue={url} onChange={onChangeDownshift}>
       {({
         inputValue,
         getInputProps,
@@ -45,10 +52,10 @@ const DropDown = props => {
                 getItemProps={getItemProps}
                 selectedItem={selectedItem}
                 clearSelection={clearSelection}
-                setFirstCommit={props.setFirstCommit}
-                firstCommit={props.firstCommit}
-                repositories={props.repositories}
-                setRepositories={props.setRepositories}
+                setFirstCommit={setFirstCommit}
+                firstCommit={firstCommit}
+                repositories={repositories}
+                setRepositories={setRepositories}
               />
             </ResultsContainer>
           )}

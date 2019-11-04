@@ -12,37 +12,44 @@ import {
   RepoTitle
 } from "./elements";
 
-const ResultsList = props => {
+const ResultsList = ({
+  inputValue,
+  setRepositories,
+  setFirstCommit,
+  clearSelection,
+  repositories,
+  highlightedIndex,
+  selectedItem,
+  getItemProps
+}) => {
   const [loadingRepo, setLoadingRepo] = useState(false);
   const searchRepositories = debounce(async () => {
-    if (props.inputValue) {
+    if (inputValue) {
       setLoadingRepo(true);
       let response = await client.get(
-        `/search/repositories?q=${props.inputValue}&per_page=5`
+        `/search/repositories?q=${inputValue}&per_page=5`
       );
       const repositories = response.data.items;
-      props.setRepositories(
-        repositories.map(repository => repository.full_name)
-      );
+      setRepositories(repositories.map(repository => repository.full_name));
       setLoadingRepo(false);
     } else {
-      props.setRepositories(null);
-      props.setFirstCommit(null);
+      setFirstCommit(null);
       setLoadingRepo(false);
-      props.clearSelection();
+      clearSelection();
+      setRepositories(null);
     }
   }, 400);
 
   useEffect(() => {
-    window.history.pushState(null, "/?repo=", `/?repo=${props.inputValue}`);
+    window.history.pushState(null, "/?repo=", `/?repo=${inputValue}`);
     searchRepositories();
-    props.setFirstCommit();
+    setFirstCommit();
     setLoadingRepo(true);
     return () => {
       searchRepositories.cancel();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.inputValue]);
+  }, [inputValue]);
 
   return (
     <div>
@@ -52,36 +59,34 @@ const ResultsList = props => {
         </SkeletonContainer>
       ) : (
         <NoRepo>
-          {props.repositories &&
-            props.repositories.length === 0 &&
-            props.inputValue !== "" && (
-              <>
-                <Floating>
-                  <Img
-                    className="icon-reward"
-                    src={require(`../../assets/img/error.png`)}
-                    alt="icon-reward"
-                  />
-                </Floating>
-                <Title>
-                  No results were found, the repository may be in private
-                </Title>
-              </>
-            )}
+          {repositories && repositories.length === 0 && inputValue !== "" && (
+            <>
+              <Floating>
+                <Img
+                  className="icon-reward"
+                  src={require(`../../assets/img/error.png`)}
+                  alt="icon-reward"
+                />
+              </Floating>
+              <Title>
+                No results were found, the repository may be in private
+              </Title>
+            </>
+          )}
 
-          {props.repositories &&
-            props.repositories.length >= 1 &&
-            props.repositories.map((repository, index) => (
+          {repositories &&
+            repositories.length >= 1 &&
+            repositories.map((repository, index) => (
               <Suggestion
-                isActive={props.highlightedIndex === index}
-                selectedItem={props.selectedItem === repository}
+                isActive={highlightedIndex === index}
+                selectedItem={selectedItem === repository}
                 key={repository}
               >
                 <RepoTitle
-                  isActive={props.highlightedIndex === index}
-                  selectedItem={props.selectedItem === repository}
+                  isActive={highlightedIndex === index}
+                  selectedItem={selectedItem === repository}
                   style={{ padding: 10, margin: 0 }}
-                  {...props.getItemProps({
+                  {...getItemProps({
                     item: repository,
                     key: repository
                   })}

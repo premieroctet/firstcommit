@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DropDown from "./components/DropDown";
 import CommitItem from "./components/CommitItem";
 import {
@@ -23,6 +23,7 @@ function App() {
   const [hasError, setError] = useState(false);
 
   const getFirstCommit = async repository => {
+    setRepositories(null);
     setError(false);
     setLoadingCommit(true);
     if (repository) {
@@ -40,10 +41,13 @@ function App() {
         setFirstCommit(null);
       }
     }
-    setRepositories();
-    console.log(repositories);
+    setRepositories(null);
     setLoadingCommit(false);
   };
+
+  useEffect(() => {
+    console.log(repositories);
+  }, [repositories]);
 
   return (
     <Layout>
