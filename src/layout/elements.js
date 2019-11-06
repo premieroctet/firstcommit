@@ -1,37 +1,84 @@
 import styled from "styled-components";
 
 export const Layout = styled.div`
-  border: 15px solid #1050ff;
   text-align: center;
   padding: 20px;
   height: 95vh;
+  align-items: center;
+`;
+
+export const Box = styled.div`
+  text-align: center;
+  align-items: center;
+  margin-top: 10%;
+  @media screen and (max-width: 500px) {
+    margin-top: 0;
+  }
 `;
 
 export const Container = styled.div`
   text-align: center;
   margin: 0 auto;
-  margin-top: 10%;
+  margin-top: 2%;
   vertical-align: middle;
 `;
 
+export const Levitation = styled.div`
+  animation: float 3.5s ease-in-out infinite;
+  @keyframes float {
+    0% {
+      transform: translatey(0px);
+    }
+    50% {
+      transform: translatey(-13px);
+    }
+    100% {
+      transform: translatey(0px);
+    }
+  }
+`;
+
 export const Title = styled.p`
-  font-size: 30px;
+  font-size: 65px;
   text-align: center;
   font-weight: bold;
-  color: #1050ff;
+  color: forestgreen;
+  margin: 0;
+  margin-top: 30px;
+  @media screen and (max-width: 500px) {
+    font-size: 25px;
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
 `;
 
 export const Error = styled.p`
   font-size: 17px;
   text-align: center;
-  color: #1050ff;
+  color: forestgreen;
   margin-top: 30px;
+`;
+
+export const Img = styled.img`
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  @media screen and (max-width: 500px) {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 export const Desc = styled.label`
   font-size: 20px;
-  font-weight: bold;
-  color: #1050ff;
+  font-weight: 600;
+  color: forestgreen;
+  @media screen and (max-width: 500px) {
+    font-size: 17px;
+  }
 `;
 
 export default Container;
