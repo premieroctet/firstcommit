@@ -1,84 +1,46 @@
 import styled from "styled-components";
 
 export const Layout = styled.div`
-  text-align: center;
-  padding: 20px;
-  height: 95vh;
+  height: 100vh;
+  display: flex;
   align-items: center;
-`;
-
-export const Box = styled.div`
   text-align: center;
-  align-items: center;
-  margin-top: 10%;
-  @media screen and (max-width: 500px) {
-    margin-top: 0;
-  }
+  flex-direction: column;
 `;
 
 export const Container = styled.div`
-  text-align: center;
   margin: 0 auto;
   margin-top: 2%;
   vertical-align: middle;
 `;
 
-export const Levitation = styled.div`
-  animation: float 3.5s ease-in-out infinite;
-  @keyframes float {
-    0% {
-      transform: translatey(0px);
-    }
-    50% {
-      transform: translatey(-13px);
-    }
-    100% {
-      transform: translatey(0px);
-    }
+export const Title = styled.h1`
+  font-size: 4.5rem;
+  font-weight: bold;
+  margin: 0;
+  margin-top: -1.5rem;
+
+  @media screen and (max-width: 500px) {
+    font-size: 3rem;
+    margin-top: 0;
   }
 `;
 
-export const Title = styled.p`
-  font-size: 65px;
-  text-align: center;
-  font-weight: bold;
-  color: forestgreen;
+export const Caption = styled.h2`
+  font-size: 23px;
+  font-weight: 600;
   margin: 0;
-  margin-top: 30px;
+  margin-bottom: 2rem;
+
   @media screen and (max-width: 500px) {
-    font-size: 25px;
-    margin-top: 0;
-    margin-bottom: 25px;
+    font-size: 1rem;
   }
 `;
 
 export const Error = styled.p`
-  font-size: 17px;
-  text-align: center;
-  color: forestgreen;
+  font-size: 1rem;
+  color: white;
   margin-top: 30px;
-`;
-
-export const Img = styled.img`
-  width: 150px;
-  height: 150px;
-  margin: 0 auto;
-  display: block;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  @media screen and (max-width: 500px) {
-    width: 80px;
-    height: 80px;
-  }
-`;
-
-export const Desc = styled.label`
-  font-size: 20px;
-  font-weight: 600;
-  color: forestgreen;
-  @media screen and (max-width: 500px) {
-    font-size: 17px;
-  }
 `;
 
 export default Container;
