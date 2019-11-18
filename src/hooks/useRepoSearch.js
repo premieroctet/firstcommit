@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import client from "../api/client";
-import { useThrottle } from "use-throttle";
+import { useDebounce } from "use-debounce";
 
 export const RESULT_PER_PAGE = 3;
 
@@ -15,7 +15,7 @@ const useRepoSearch = searchTerm => {
     window.history.pushState(null, "/", "/");
   }
 
-  const throttledTerm = useThrottle(searchTerm, 400);
+  const [debouncedTerm] = useDebounce(searchTerm, 400);
 
   const loadRepositories = useCallback(async () => {
     try {
@@ -23,7 +23,7 @@ const useRepoSearch = searchTerm => {
       setLoading(true);
 
       const response = await client.get(
-        `/search/repositories?q=${throttledTerm}&per_page=${RESULT_PER_PAGE}`
+        `/search/repositories?q=${debouncedTerm}&per_page=${RESULT_PER_PAGE}`
       );
 
       setRepositories(response.data.items);
@@ -32,13 +32,17 @@ const useRepoSearch = searchTerm => {
     }
 
     setLoading(false);
-  }, [throttledTerm]);
+  }, [debouncedTerm]);
 
   useEffect(() => {
-    if (throttledTerm) {
+    setLoading(true);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (debouncedTerm) {
       loadRepositories();
     }
-  }, [loadRepositories, throttledTerm]);
+  }, [loadRepositories, debouncedTerm]);
 
   return { repositories, loading, error };
 };

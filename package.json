@@ -12,7 +12,7 @@
     "react-loading-skeleton": "^1.2.0",
     "react-scripts": "3.0.1",
     "styled-components": "^5.0.0-beta.8-groupsizefix",
-    "use-throttle": "^0.0.3",
+    "use-debounce": "^3.1.0",
     "zdog": "^1.1.1"
   },
   "scripts": {
