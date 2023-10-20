@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #fff;
+  --background: #222e7c;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Raleway", sans-serif;
+}
+
+a {
+  text-decoration: underline;
+}
