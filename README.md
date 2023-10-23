@@ -4,7 +4,7 @@
 
 # First Commit 🎈
 
-> Dig up the first commit of any GitHub repo. — https://firstcommit.netlify.com
+> Dig up the first commit of any GitHub repo. — https://firstcommit.app
 
 [![Screeshot](https://user-images.githubusercontent.com/1102595/68696442-4979ee80-057d-11ea-9b58-e5ad4cd518c6.png)](https://firstcommit.netlify.com)
 
