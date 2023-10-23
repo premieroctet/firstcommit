@@ -22,7 +22,7 @@ export default function Search() {
 
     const updateQueryString = useCallback(
         (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams)
+            const params = new URLSearchParams(location.search)
             params.set(name, value)
             router.push(pathname + '?' + params.toString())
         },
@@ -87,8 +87,12 @@ export default function Search() {
 
         const commits = await response.json() as GithubCommit[];
         const lastCommit = commits[commits.length - 1];
-        setFirstCommit(lastCommit);
-        setIsLookingForCommit(false);
+
+        if (lastCommit) {
+            setFirstCommit(lastCommit);
+            setIsLookingForCommit(false);
+            updateQueryString("commit", lastCommit.sha);
+        }
     }
 
     useEffect(() => {
