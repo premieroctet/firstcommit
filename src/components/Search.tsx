@@ -98,7 +98,7 @@ export default function Search() {
     }, [])
 
     return <>
-        <div className="max-w-[400px] w-full">
+        <div className="max-w-[90%] md:max-w-[400px] w-full">
             <Combobox value={search} onChange={onSelectRepository}>
                 <Combobox.Input onChange={debouncedOnSearch} className="text-[black] bg-[white] text-left h-[30px] text-2xl box-border w-[inherit] px-5 py-[30px] rounded-[10px] border-[3px] border-solid border-[black]" autoFocus placeholder="Search repositories..." />
                 {repositories.length > 0 && !isSearching && <Combobox.Options className="text-[17px] [list-style:none] [border-style:dashed_solid_solid] [border-image:initial] z-[111] relative bg-[white] max-w-full box-border overflow-hidden -mt-2.5 mb-0 mx-0 p-0 rounded-br-[10px] rounded-bl-[10px] border-[3px] border-[black]">

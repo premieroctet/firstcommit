@@ -24,8 +24,8 @@ export default function RootLayout({
           </a>
           <div className="h-screen flex items-center text-center flex-col">
             <Logo />
-            <h1 className="text-7xl font-bold m-0">First Commit</h1>
-            <p className="text-[23px] font-semibold mt-0 mb-8 mx-0">Dig up the first commit of any GitHub repo</p>
+            <h1 className="text-5xl md:text-7xl font-bold m-0">First Commit</h1>
+            <p className="text-[17px] md:text-[23px] font-semibold mt-0 mb-8 mx-0">Dig up the first commit of any GitHub repo</p>
             {children}
           </div>
           <footer className="fixed font-semibold text-[1.1rem] px-2.5 py-1 right-0 bottom-[5px]">Crafted by <a href="https://www.premieroctet.com/">@premieroctet</a> 🎈 - Code available on <a href="https://github.com/premieroctet/firstcommit">GitHub</a></footer>
