@@ -20,7 +20,7 @@ yarn install
 **Run dev server**
 
 ```sh
-yarn start
+yarn dev
 ```
 
 **Build app**

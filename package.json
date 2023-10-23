@@ -2,38 +2,32 @@
   "name": "first-commit",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@reach/combobox": "^0.5.3",
-    "axios": "^0.19.0",
-    "date-fns": "^2.5.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-github-corners": "^0.2.1",
-    "react-loading-skeleton": "^1.2.0",
-    "react-scripts": "3.0.1",
-    "styled-components": "^5.0.0-beta.8-groupsizefix",
-    "use-debounce": "^3.1.0",
-    "zdog": "^1.1.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "date-fns": "^2.30.0",
+    "lodash.debounce": "^4.0.8",
+    "next": "13.5.6",
+    "react": "^18",
+    "react-dom": "^18",
+    "zdog": "^1.1.3"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/lodash.debounce": "^4.0.8",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/zdog": "^1.1.6",
+    "autoprefixer": "^10",
+    "eslint": "^8",
+    "eslint-config-next": "13.5.6",
+    "postcss": "^8",
+    "tailwindcss": "^3",
+    "typescript": "^5"
   }
 }

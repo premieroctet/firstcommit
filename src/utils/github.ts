@@ -1,4 +1,4 @@
-export function parseLinkHeader(linkHeader) {
+export function parseLinkHeader(linkHeader: string): Record<string, string> {
   if (linkHeader.length === 0) {
     throw new Error("input must not be of zero length");
   }
@@ -12,6 +12,7 @@ export function parseLinkHeader(linkHeader) {
     const url = section[0].replace(/<(.*)>/, "$1").trim();
     const name = section[1].replace(/rel="(.*)"/, "$1").trim();
 
+    // @ts-ignore
     links[name] = url;
 
     return links;
